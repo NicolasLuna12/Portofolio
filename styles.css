@@ -162,13 +162,13 @@ body {
     background: var(--background-secondary);
     border: 2px solid var(--border-color);
     color: var(--text-primary);
+    width: 45px;
     height: 45px;
-    padding: 0 14px;
     border-radius: 22px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
     transition: all 0.3s ease;
     margin-left: 12px;
 }
@@ -177,10 +177,6 @@ body {
     background: var(--primary-color);
     border-color: var(--primary-color);
     color: white;
-}
-
-.flag-icon {
-    font-size: 1rem;
 }
 
 .lang-text {
@@ -821,7 +817,6 @@ section {
     .lang-toggle {
         width: 40px;
         height: 40px;
-        padding: 0 8px;
     }
     
     .lang-toggle {
@@ -829,11 +824,7 @@ section {
     }
     
     .lang-text {
-        display: none;
-    }
-    
-    .flag-icon {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
     
     .nav-menu {
