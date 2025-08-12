@@ -162,13 +162,14 @@ body {
     background: var(--background-secondary);
     border: 2px solid var(--border-color);
     color: var(--text-primary);
-    width: 45px;
     height: 45px;
+    padding: 0 12px;
     border-radius: 22px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     transition: all 0.3s ease;
     margin-left: 12px;
 }
@@ -179,8 +180,12 @@ body {
     color: white;
 }
 
+.lang-toggle i {
+    font-size: 0.9rem;
+}
+
 .lang-text {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
@@ -817,6 +822,7 @@ section {
     .lang-toggle {
         width: 40px;
         height: 40px;
+        padding: 0 8px;
     }
     
     .lang-toggle {
@@ -824,7 +830,11 @@ section {
     }
     
     .lang-text {
-        font-size: 0.8rem;
+        display: none;
+    }
+    
+    .lang-toggle i {
+        font-size: 1rem;
     }
     
     .nav-menu {
