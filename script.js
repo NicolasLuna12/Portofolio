@@ -180,7 +180,9 @@ const displayProjects = (repos) => {
         !repo.fork && 
         repo.size > 0 &&
         repo.name !== 'nicolasluna12' &&  // Excluir el proyecto nicolasluna12
-        repo.name !== 'NicolasLuna12'     // Por si acaso está con mayúsculas
+        repo.name !== 'NicolasLuna12' &&  // Por si acaso está con mayúsculas
+        repo.name !== 'Portofolio' &&     // Excluir el repositorio Portfolio
+        repo.name !== 'portofolio'        // Por si acaso está en minúsculas
     ).sort((a, b) => {
         // Ordenar por última actualización y número de estrellas
         const aScore = new Date(a.updated_at).getTime() + (a.stargazers_count * 1000000);
