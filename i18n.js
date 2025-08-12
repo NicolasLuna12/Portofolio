@@ -137,11 +137,11 @@ class Internationalization {
         const langText = langToggle.querySelector('.lang-text');
         
         if (this.currentLang === 'en') {
-            flagIcon.textContent = '🇪🇸';
-            langText.textContent = 'ES';
+            flagIcon.textContent = '�🇸';
+            langText.textContent = 'US';
         } else {
-            flagIcon.textContent = '🇺🇸';
-            langText.textContent = 'EN';
+            flagIcon.textContent = '��';
+            langText.textContent = 'ES';
         }
     }
     
