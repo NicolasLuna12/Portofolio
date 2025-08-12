@@ -20,13 +20,17 @@
                 <span>Nicolas Luna</span>
             </div>
             <div class="nav-menu">
-                <a href="#home" class="nav-link">Inicio</a>
-                <a href="#about" class="nav-link">Sobre mí</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Proyectos</a>
-                <a href="#contact" class="nav-link">Contacto</a>
+                <a href="#home" class="nav-link" data-translate="nav_home">Inicio</a>
+                <a href="#about" class="nav-link" data-translate="nav_about">Sobre mí</a>
+                <a href="#skills" class="nav-link" data-translate="nav_skills">Skills</a>
+                <a href="#projects" class="nav-link" data-translate="nav_projects">Proyectos</a>
+                <a href="#contact" class="nav-link" data-translate="nav_contact">Contacto</a>
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
+                </button>
+                <button class="lang-toggle" id="lang-toggle">
+                    <span class="flag-icon">🇺🇸</span>
+                    <span class="lang-text">EN</span>
                 </button>
             </div>
             <div class="hamburger">
@@ -42,17 +46,17 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Hola, soy <span class="highlight">Nicolas Luna</span>
+                    <span data-translate="hero_hello">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
                 </h1>
-                <h2 class="hero-subtitle">Técnico Superior en Desarrollo Web y Aplicaciones Móviles</h2>
-                <p class="hero-description">
+                <h2 class="hero-subtitle" data-translate="hero_title">Técnico Superior en Desarrollo Web y Aplicaciones Móviles</h2>
+                <p class="hero-description" data-translate="hero_description">
                     Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
                     Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales 
                     y desarrollo de aplicaciones móviles. Enfocado en soluciones robustas y código limpio.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
-                    <a href="#contact" class="btn btn-outline">Contactarme</a>
+                    <a href="#projects" class="btn btn-primary" data-translate="hero_projects_btn">Ver Proyectos</a>
+                    <a href="#contact" class="btn btn-outline" data-translate="hero_contact_btn">Contactarme</a>
                 </div>
                 <div class="hero-social">
                     <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
@@ -101,17 +105,17 @@ class SystemHealthView(APIView):
     <section id="about" class="about">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Sobre Mí</h2>
-                <p class="section-subtitle">Especializado en desarrollo web y aplicaciones móviles</p>
+                <h2 class="section-title" data-translate="about_title">Sobre Mí</h2>
+                <p class="section-subtitle" data-translate="about_subtitle">Especializado en desarrollo web y aplicaciones móviles</p>
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p>
+                    <p data-translate="about_description_1">
                         Con 3+ años de experiencia en desarrollo de sistemas backend robustos y escalables. 
                         Especializado en Python/Django para aplicaciones web modernas y COBOL para 
                         mantenimiento de sistemas legacy empresariales.
                     </p>
-                    <p>
+                    <p data-translate="about_description_2">
                         Mi formación técnica incluye diseño de APIs RESTful, optimización de bases de datos SQL/NoSQL, 
                         desarrollo de aplicaciones móviles y despliegues en cloud (AWS/Google Cloud). Comprometido con 
                         las mejores prácticas: código limpio, testing automatizado y documentación técnica profesional.
@@ -119,15 +123,15 @@ class SystemHealthView(APIView):
                     <div class="about-stats">
                         <div class="stat">
                             <span class="stat-number" data-target="10">0</span>
-                            <span class="stat-label">Proyectos</span>
+                            <span class="stat-label" data-translate="about_projects_stat">Proyectos</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" data-target="3">0</span>
-                            <span class="stat-label">Años Experiencia</span>
+                            <span class="stat-label" data-translate="about_experience_stat">Años Experiencia</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" data-target="8">0</span>
-                            <span class="stat-label">Tecnologías</span>
+                            <span class="stat-label" data-translate="about_tech_stat">Tecnologías</span>
                         </div>
                     </div>
                     <div class="stats-footer">
@@ -170,8 +174,8 @@ class SystemHealthView(APIView):
     <section id="skills" class="skills">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Stack Tecnológico</h2>
-                <p class="section-subtitle">Tecnologías aprendidas en mi formación técnica superior y experiencia profesional</p>
+                <h2 class="section-title" data-translate="skills_title">Stack Tecnológico</h2>
+                <p class="section-subtitle" data-translate="skills_subtitle">Tecnologías aprendidas en mi formación técnica superior y experiencia profesional</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-category">
@@ -346,8 +350,8 @@ class SystemHealthView(APIView):
     <section id="projects" class="projects">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Portfolio de Proyectos</h2>
-                <p class="section-subtitle">Selección de proyectos backend que demuestran mi experiencia técnica</p>
+                <h2 class="section-title" data-translate="projects_title">Portfolio de Proyectos</h2>
+                <p class="section-subtitle" data-translate="projects_subtitle">Selección de proyectos backend que demuestran mi experiencia técnica</p>
             </div>
             <div class="projects-grid" id="projects-grid">
                 <!-- Los proyectos se cargarán dinámicamente desde GitHub -->
@@ -373,19 +377,19 @@ class SystemHealthView(APIView):
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Contacto Profesional</h2>
-                <p class="section-subtitle">¿Interesado en colaborar? Conectemos para discutir oportunidades</p>
+                <h2 class="section-title" data-translate="contact_title">Contacto Profesional</h2>
+                <p class="section-subtitle" data-translate="contact_subtitle">¿Interesado en colaborar? Conectemos para discutir oportunidades</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>Información de Contacto</h3>
+                    <h3 data-translate="contact_info_title">Información de Contacto</h3>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <span>nicolasluna.ca@gmail.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Córdoba, Argentina</span>
+                        <span data-translate="contact_location">Córdoba, Argentina</span>
                     </div>
                     <div class="contact-item">
                         <i class="fab fa-github"></i>
@@ -397,29 +401,29 @@ class SystemHealthView(APIView):
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
-                        <span>Disponible para todo tipo de proyectos</span>
+                        <span data-translate="contact_availability">Disponible para todo tipo de proyectos</span>
                     </div>
                 </div>
                 <form class="contact-form" id="contact-form">
                     <div class="form-group">
-                        <label for="name">Nombre</label>
+                        <label for="name" data-translate="contact_form_name">Nombre</label>
                         <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email" data-translate="contact_form_email">Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Asunto</label>
+                        <label for="subject" data-translate="contact_form_subject">Asunto</label>
                         <input type="text" id="subject" name="subject" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Mensaje</label>
+                        <label for="message" data-translate="contact_form_message">Mensaje</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-paper-plane"></i>
-                        Enviar Mensaje
+                        <span data-translate="contact_form_send">Enviar Mensaje</span>
                     </button>
                 </form>
             </div>
@@ -436,6 +440,7 @@ class SystemHealthView(APIView):
         </div>
     </footer>
 
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
