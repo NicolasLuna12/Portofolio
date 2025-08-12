@@ -136,7 +136,7 @@ class Internationalization {
         const langText = langToggle.querySelector('.lang-text');
         
         if (this.currentLang === 'en') {
-            langText.textContent = 'US';
+            langText.textContent = 'ENG';
         } else {
             langText.textContent = 'ES';
         }
