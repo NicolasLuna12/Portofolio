@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="es                <button class="lang-toggle" id="lang-toggle">
-                    <span class="lang-text">ES</span>
-                </button><head>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nicolas Luna - Técnico Superior en Desarrollo Web y Apps Móviles</title>
@@ -24,14 +23,15 @@
                 <span>Nicolas Luna</span>
             </div>
             <div class="nav-menu">
-                <a href="#home" class="nav-link" data-translate="nav_home">Inicio</a>
-                <a href="#about" class="nav-link" data-translate="nav_about">Sobre mí</a>
-                <a href="#skills" class="nav-link" data-translate="nav_skills">Skills</a>
-                <a href="#projects" class="nav-link" data-translate="nav_projects">Proyectos</a>
-                <a href="#contact" class="nav-link" data-translate="nav_contact">Contacto</a>
+                <a href="#home" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a>
+                <a href="#about" class="nav-link" data-es="Sobre mí" data-en="About">Sobre mí</a>
+                <a href="#skills" class="nav-link" data-es="Skills" data-en="Skills">Skills</a>
+                <a href="#projects" class="nav-link" data-es="Proyectos" data-en="Projects">Proyectos</a>
+                <a href="#contact" class="nav-link" data-es="Contacto" data-en="Contact">Contacto</a>
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
+                <button class="lang-toggle" id="lang-toggle">ES</button>
             </div>
             <div class="hamburger">
                 <span></span>
@@ -46,17 +46,17 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span data-translate="hero_hello">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
+                    <span data-es="Hola, soy" data-en="Hi, I'm">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
                 </h1>
-                <h2 class="hero-subtitle" data-translate="hero_title">Técnico Superior en Desarrollo Web y Aplicaciones Móviles</h2>
-                <p class="hero-description" data-translate="hero_description">
+                <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Móviles" data-en="Senior Web & Mobile App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Móviles</h2>
+                <p class="hero-description" data-es="Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones móviles. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and mobile app development. Focused on robust solutions and clean code.">
                     Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
                     Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales 
                     y desarrollo de aplicaciones móviles. Enfocado en soluciones robustas y código limpio.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary" data-translate="hero_projects_btn">Ver Proyectos</a>
-                    <a href="#contact" class="btn btn-outline" data-translate="hero_contact_btn">Contactarme</a>
+                    <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects">Ver Proyectos</a>
+                    <a href="#contact" class="btn btn-outline" data-es="Contactarme" data-en="Contact Me">Contactarme</a>
                 </div>
                 <div class="hero-social">
                     <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
@@ -444,6 +444,7 @@ class SystemHealthView(APIView):
         </div>
     </footer>
 
+    <script src="translator.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
