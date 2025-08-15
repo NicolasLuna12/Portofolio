@@ -57,6 +57,7 @@
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects">Ver Proyectos</a>
                     <a href="#contact" class="btn btn-outline" data-es="Contactarme" data-en="Contact Me">Contactarme</a>
+                    <button id="demo-btn" class="btn btn-secondary" type="button"><i class="fas fa-laptop"></i> Ver Demo</button>
                 </div>
                 <div class="hero-social">
                     <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
@@ -443,7 +444,50 @@ class SystemHealthView(APIView):
         </div>
     </footer>
 
+    <!-- Modal Demo Login -->
+    <div id="demo-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-demo-modal">&times;</span>
+            <h3>Credenciales de Demo</h3>
+            <p><strong>Usuario:</strong> demo@demo.com</p>
+            <p><strong>Contraseña:</strong> demo1234</p>
+            <button id="go-demo-login" class="btn btn-primary" style="margin-top:10px;">Ir al Login</button>
+        </div>
+    </div>
+    <style>
+    .modal {
+        position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+    }
+    .modal-content {
+        background: #fff; padding: 2rem 2.5rem; border-radius: 10px; box-shadow: 0 2px 20px #0002; text-align: center;
+    }
+    .close-modal {
+        position: absolute; right: 1.5rem; top: 1.2rem; font-size: 2rem; cursor: pointer; color: #888;
+    }
+    </style>
+
     <script src="translator.js"></script>
     <script src="script.js"></script>
+    <script>
+    // Modal Demo
+    document.addEventListener('DOMContentLoaded', function() {
+        var demoBtn = document.getElementById('demo-btn');
+        var modal = document.getElementById('demo-modal');
+        var closeModal = document.getElementById('close-demo-modal');
+        var goDemo = document.getElementById('go-demo-login');
+        if(demoBtn && modal && closeModal && goDemo) {
+            demoBtn.onclick = function() { modal.style.display = 'flex'; };
+            closeModal.onclick = function() { modal.style.display = 'none'; };
+            goDemo.onclick = function() {
+                window.open('https://ispcfood.netlify.app/login', '_blank');
+                modal.style.display = 'none';
+            };
+            window.onclick = function(event) {
+                if(event.target === modal) modal.style.display = 'none';
+            };
+        }
+    });
+    </script>
 </body>
 </html>
