@@ -446,7 +446,7 @@ const init = () => {
     loadGitHubProjects();
     
     // Setup confetti button
-    setupConfettiButton();
+    // Confetti deshabilitado
     
     // Contact Form
     contactForm?.addEventListener('submit', handleContactForm);
@@ -661,7 +661,7 @@ const setupConfettiButton = () => {
                 
                 // Navegar después de mostrar confetti - esperar 2.5 segundos para ver la animación completa
                 setTimeout(() => {
-                    window.open(demoButton.href, '_blank');
+                    // window.open deshabilitado para demo
                 }, 2500);
             });
             console.log('🎉 Confetti button configured!');
