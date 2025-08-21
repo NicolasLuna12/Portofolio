@@ -1,3 +1,29 @@
+// Prohibir el uso de consola en toda la página
+window.console = {
+    log: function() {},
+    warn: function() {},
+    error: function() {},
+    info: function() {},
+    debug: function() {},
+    trace: function() {},
+    dir: function() {},
+    dirxml: function() {},
+    group: function() {},
+    groupCollapsed: function() {},
+    groupEnd: function() {},
+    time: function() {},
+    timeEnd: function() {},
+    timeLog: function() {},
+    assert: function() {},
+    clear: function() {},
+    count: function() {},
+    countReset: function() {},
+    table: function() {},
+    profile: function() {},
+    profileEnd: function() {},
+    timeStamp: function() {},
+    context: function() {}
+};
 // DOM Elements
 const themeToggle = document.getElementById('theme-toggle');
 const hamburger = document.querySelector('.hamburger');
@@ -166,15 +192,11 @@ const loadGitHubProjects = async () => {
             displayProjectsError();
         }
     } catch (error) {
-        console.error('Error loading GitHub projects:', error);
         displayProjectsError();
     }
 };
 
 const displayProjects = (repos) => {
-    // Debug: mostrar todos los nombres de repos en consola
-    console.log('Todos los repos:', repos.map(r => r.name));
-    
     // Filter for most relevant projects - todos los que no sean forks y tengan descripción
     const filteredRepos = repos.filter(repo => 
         !repo.fork && 
@@ -189,9 +211,6 @@ const displayProjects = (repos) => {
         const bScore = new Date(b.updated_at).getTime() + (b.stargazers_count * 1000000);
         return bScore - aScore;
     });
-    
-    console.log('Repos filtrados:', filteredRepos.map(r => r.name));
-    console.log('Buscando Android-Tesis-2025:', filteredRepos.find(r => r.name === 'Android-Tesis-2025'));
     
     // Agregar el proyecto Android si no está en los filtrados
     if (!filteredRepos.find(r => r.name === 'Android-Tesis-2025')) {
@@ -474,7 +493,6 @@ const init = () => {
         }, 1000);
     }
     
-    console.log('🚀 Portfolio initialized successfully!');
 };
 
 // Start when DOM is loaded
@@ -647,26 +665,19 @@ const createConfetti = (x, y) => {
 
 // Add click event to demo button
 const setupConfettiButton = () => {
-    // Usar un timeout para asegurar que el botón esté en el DOM
     setTimeout(() => {
         const demoButton = document.querySelector('.btn-secondary');
         if (demoButton) {
             demoButton.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevenir navegación inmediata
-                
+                e.preventDefault();
                 const rect = e.target.getBoundingClientRect();
                 const x = rect.left + rect.width / 2;
                 const y = rect.top + rect.height / 2;
                 createConfetti(x, y);
-                
-                // Navegar después de mostrar confetti - esperar 2.5 segundos para ver la animación completa
                 setTimeout(() => {
                     // window.open deshabilitado para demo
                 }, 2500);
             });
-            console.log('🎉 Confetti button configured!');
-        } else {
-            console.log('❌ Demo button not found');
         }
     }, 1000);
 };
