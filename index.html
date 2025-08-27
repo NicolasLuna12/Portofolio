@@ -57,7 +57,8 @@
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects">Ver Proyectos</a>
                     <a href="#contact" class="btn btn-outline" data-es="Contactarme" data-en="Contact Me">Contactarme</a>
-                    <button id="demo-btn" class="btn btn-secondary" type="button"><i class="fas fa-laptop"></i> Ver Demo</button>
+                    <button id="demo-btn" class="btn btn-secondary" type="button"><i class="fas fa-laptop"></i> Ver demo web</button>
+                    <button id="demo-android-btn" class="btn btn-android" type="button" style="margin-left:8px;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png" alt="Android" style="width:22px;vertical-align:middle;margin-right:6px;"> Ver demo Android</button>
                 </div>
                 <div class="hero-social">
                     <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
@@ -541,19 +542,28 @@ class SystemHealthView(APIView):
     // Modal Demo
     document.addEventListener('DOMContentLoaded', function() {
         var demoBtn = document.getElementById('demo-btn');
+        var demoAndroidBtn = document.getElementById('demo-android-btn');
         var modal = document.getElementById('demo-modal');
         var closeModal = document.getElementById('close-demo-modal');
         var goDemo = document.getElementById('go-demo-login');
+        var lastDemo = null;
         if(demoBtn && modal && closeModal && goDemo) {
-            demoBtn.onclick = function() { modal.style.display = 'flex'; };
+            demoBtn.onclick = function() { modal.style.display = 'flex'; lastDemo = 'web'; };
             closeModal.onclick = function() { modal.style.display = 'none'; };
             goDemo.onclick = function() {
-                window.open('https://ispcfood.netlify.app/login', '_blank');
+                if(lastDemo === 'android') {
+                    window.open('https://appetize.io/app/b_zzjugodwwxe26uawgbpk4yiqhi', '_blank');
+                } else {
+                    window.open('https://ispcfood.netlify.app/login', '_blank');
+                }
                 modal.style.display = 'none';
             };
             window.onclick = function(event) {
                 if(event.target === modal) modal.style.display = 'none';
             };
+        }
+        if(demoAndroidBtn && modal && closeModal && goDemo) {
+            demoAndroidBtn.onclick = function() { modal.style.display = 'flex'; lastDemo = 'android'; };
         }
     });
     </script>

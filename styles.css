@@ -315,6 +315,28 @@ body {
     background: linear-gradient(135deg, #ff5252, #ff7043);
 }
 
+.btn-android {
+    background: linear-gradient(135deg, #34a853, #a8e063);
+    color: #fff;
+    box-shadow: var(--shadow);
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.btn-android:hover {
+    background: linear-gradient(135deg, #218838, #6fdc6f);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
 .hero-social {
     display: flex;
     gap: 1rem;
