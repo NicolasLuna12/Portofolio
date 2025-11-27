@@ -1,5 +1,5 @@
 # Credenciales y configuración sensible
-config.js
+# config.js - Comentado para permitir deploy en GitHub Pages
 
 # Node modules (si usas npm en el futuro)
 node_modules/
