@@ -356,50 +356,9 @@ const getTechStack = (name, description) => {
     return techStack.length > 0 ? techStack : ['Backend'];
 };
 
-// Contact Form Handler
-const handleContactForm = (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const subject = formData.get('subject');
-    const message = formData.get('message');
-    
-    // Create mailto link (since we don't have a backend)
-    const mailtoLink = `mailto:nicolasluna.ca@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`)}`;
-    
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    showNotification('¡Mensaje enviado! Se abrirá tu cliente de correo.', 'success');
-    
-    // Reset form
-    contactForm.reset();
-};
+// Contact Form Handler - ELIMINADO (ahora se usa EmailJS al final del archivo)
 
-// Notification System
-const showNotification = (message, type = 'info') => {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-        ${message}
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
-};
+// Notification System (Implementada al final del archivo para EmailJS)
 
 // Scroll Animations
 const observeElements = () => {
@@ -467,8 +426,8 @@ const init = () => {
     // Setup confetti button
     // Confetti deshabilitado
     
-    // Contact Form
-    contactForm?.addEventListener('submit', handleContactForm);
+    // Contact Form - Ahora manejado por EmailJS al final del archivo (línea ~700)
+    // contactForm?.addEventListener('submit', handleContactForm); // DESHABILITADO
     
     // Scroll Events
     let ticking = false;
@@ -681,3 +640,219 @@ const setupConfettiButton = () => {
         }
     }, 1000);
 };
+
+// ============================================
+// CONTACT FORM FUNCTIONALITY WITH EMAILJS
+// ============================================
+
+// Inicializar EmailJS cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificar que el archivo de configuración esté cargado
+    if (typeof EMAIL_CONFIG === 'undefined') {
+        console.error('ERROR: config.js no está cargado. Por favor, crea el archivo config.js basándote en config.example.js');
+        return;
+    }
+    
+    // Inicializar EmailJS con la configuración
+    emailjs.init(EMAIL_CONFIG.publicKey);
+    
+    const contactForm = document.getElementById('contact-form');
+    
+    if (contactForm) {
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener los valores del formulario
+            const nombreValue = document.getElementById('name').value.trim();
+            const emailValue = document.getElementById('email').value.trim();
+            const asuntoValue = document.getElementById('subject').value.trim();
+            const mensajeValue = document.getElementById('message').value.trim();
+            
+            // Probar con TODAS las variaciones posibles de nombres de variables
+            const templateParams = {
+                // Español
+                nombre: nombreValue,
+                email: emailValue,
+                asunto: asuntoValue,
+                mensaje: mensajeValue,
+                // Inglés
+                name: nombreValue,
+                from_name: nombreValue,
+                from_email: emailValue,
+                subject: asuntoValue,
+                message: mensajeValue,
+                // Reply
+                reply_to: emailValue,
+                to_email: 'nicolasluna.ca@gmail.com'
+            };
+            
+            // Deshabilitar el botón de envío
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
+            
+            // Mostrar notificación de "enviando"
+            showNotification('📨 Enviando tu mensaje...', 'info');
+            
+            // Enviar el email usando EmailJS
+            emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
+                .then(function(response) {
+                    // Éxito - Pequeño delay para mejor UX
+                    setTimeout(function() {
+                        showNotification('✅ ¡Mensaje enviado con éxito! Te responderé pronto.', 'success');
+                    }, 800);
+                    
+                    contactForm.reset();
+                }, function(error) {
+                    // Error - Pequeño delay para mejor UX
+                    setTimeout(function() {
+                        showNotification('❌ Hubo un error al enviar el mensaje. Por favor, intenta nuevamente o contáctame directamente por email.', 'error');
+                    }, 800);
+                })
+                .finally(function() {
+                    // Rehabilitar el botón
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                });
+        });
+    }
+});
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'info') {
+    // Eliminar notificaciones previas
+    const oldNotifications = document.querySelectorAll('.notification');
+    oldNotifications.forEach(n => n.remove());
+    
+    // Crear el elemento de notificación
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    
+    // Determinar icono según el tipo
+    let icon = 'info-circle';
+    if (type === 'success') icon = 'check-circle';
+    else if (type === 'error') icon = 'exclamation-circle';
+    else if (type === 'info') icon = 'paper-plane';
+    
+    notification.innerHTML = `
+        <i class="fas fa-${icon}"></i>
+        <span>${message}</span>
+    `;
+    
+    // Agregar estilos si no existen
+    if (!document.getElementById('notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            .notification {
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--bg-secondary, #1e1e1e);
+                color: var(--text-primary, #fff);
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                z-index: 10000;
+                animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                max-width: 450px;
+                font-size: 1rem;
+                font-weight: 500;
+                backdrop-filter: blur(10px);
+            }
+            
+            .notification-success {
+                border-left: 5px solid #10b981;
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
+            }
+            
+            .notification-success i {
+                color: #10b981;
+                font-size: 1.8rem;
+            }
+            
+            .notification-error {
+                border-left: 5px solid #ef4444;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
+            }
+            
+            .notification-error i {
+                color: #ef4444;
+                font-size: 1.8rem;
+            }
+            
+            .notification-info {
+                border-left: 5px solid #3b82f6;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
+            }
+            
+            .notification-info i {
+                color: #3b82f6;
+                font-size: 1.8rem;
+                animation: pulse 1.5s ease-in-out infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.7; transform: scale(1.1); }
+            }
+            
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .notification {
+                    right: 10px;
+                    left: 10px;
+                    max-width: calc(100% - 20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Agregar la notificación al body
+    document.body.appendChild(notification);
+    
+    // Duración según el tipo de notificación
+    let duration = 5000; // Por defecto 5 segundos
+    if (type === 'info') {
+        duration = 8000; // 8 segundos para "Enviando..."
+    } else if (type === 'success') {
+        duration = 7000; // 7 segundos para éxito
+    } else if (type === 'error') {
+        duration = 10000; // 10 segundos para errores
+    }
+    
+    // Remover la notificación después del tiempo especificado
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, duration);
+}
