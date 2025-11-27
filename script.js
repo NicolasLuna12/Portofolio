@@ -689,169 +689,33 @@ document.addEventListener('DOMContentLoaded', function() {
             // Deshabilitar el botón de envío
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
+            const originalButtonStyle = submitButton.style.cssText;
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
-            
-            // Mostrar notificación de "enviando"
-            showNotification('📨 Enviando tu mensaje...', 'info');
             
             // Enviar el email usando EmailJS
             emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
                 .then(function(response) {
-                    // Éxito - Delay más largo para mejor transición
-                    setTimeout(function() {
-                        showNotification('✅ ¡Mensaje enviado con éxito! Te responderé pronto.', 'success');
-                    }, 1500); // Aumentado a 1.5 segundos
+                    // Éxito - Transformar botón en verde con check
+                    submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>¡Mensaje Enviado!</span>';
+                    submitButton.style.cssText = originalButtonStyle + 'background: #10b981 !important; cursor: not-allowed;';
                     
+                    // Limpiar formulario
                     contactForm.reset();
                 }, function(error) {
-                    // Error - Delay más largo para mejor transición
-                    setTimeout(function() {
-                        showNotification('❌ Hubo un error al enviar el mensaje. Por favor, intenta nuevamente o contáctame directamente por email.', 'error');
-                    }, 1500); // Aumentado a 1.5 segundos
-                })
-                .finally(function() {
-                    // Rehabilitar el botón
+                    // Error - Mostrar error en el botón
+                    submitButton.innerHTML = '<i class="fas fa-exclamation-circle"></i> <span>Error - Intenta nuevamente</span>';
+                    submitButton.style.cssText = originalButtonStyle + 'background: #ef4444 !important;';
                     submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
+                    
+                    // Restaurar botón después de 3 segundos
+                    setTimeout(function() {
+                        submitButton.innerHTML = originalButtonText;
+                        submitButton.style.cssText = originalButtonStyle;
+                    }, 3000);
                 });
         });
     }
 });
 
-// Función para mostrar notificaciones
-function showNotification(message, type = 'info') {
-    // Eliminar notificaciones previas
-    const oldNotifications = document.querySelectorAll('.notification');
-    oldNotifications.forEach(n => n.remove());
-    
-    // Crear el elemento de notificación
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    
-    // Determinar icono según el tipo
-    let icon = 'info-circle';
-    if (type === 'success') icon = 'check-circle';
-    else if (type === 'error') icon = 'exclamation-circle';
-    else if (type === 'info') icon = 'paper-plane';
-    
-    notification.innerHTML = `
-        <i class="fas fa-${icon}"></i>
-        <span>${message}</span>
-    `;
-    
-    // Agregar estilos si no existen
-    if (!document.getElementById('notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--bg-secondary, #1e1e1e);
-                color: var(--text-primary, #fff);
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                z-index: 10000;
-                animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                max-width: 450px;
-                font-size: 1rem;
-                font-weight: 500;
-                backdrop-filter: blur(10px);
-            }
-            
-            .notification-success {
-                border-left: 5px solid #10b981;
-                background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
-            }
-            
-            .notification-success i {
-                color: #10b981;
-                font-size: 1.8rem;
-            }
-            
-            .notification-error {
-                border-left: 5px solid #ef4444;
-                background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
-            }
-            
-            .notification-error i {
-                color: #ef4444;
-                font-size: 1.8rem;
-            }
-            
-            .notification-info {
-                border-left: 5px solid #3b82f6;
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, var(--bg-secondary, #1e1e1e) 100%);
-            }
-            
-            .notification-info i {
-                color: #3b82f6;
-                font-size: 1.8rem;
-                animation: pulse 1.5s ease-in-out infinite;
-            }
-            
-            @keyframes pulse {
-                0%, 100% { opacity: 1; transform: scale(1); }
-                50% { opacity: 0.7; transform: scale(1.1); }
-            }
-            
-            @keyframes slideIn {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-            
-            @media (max-width: 768px) {
-                .notification {
-                    right: 10px;
-                    left: 10px;
-                    max-width: calc(100% - 20px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    // Agregar la notificación al body
-    document.body.appendChild(notification);
-    
-    // Duración según el tipo de notificación (aumentada para mejor lectura)
-    let duration = 8000; // Por defecto 8 segundos
-    if (type === 'info') {
-        duration = 3000; // 3 segundos para "Enviando..." (se reemplaza rápido por el éxito)
-    } else if (type === 'success') {
-        duration = 12000; // 12 segundos para éxito (tiempo suficiente para leer)
-    } else if (type === 'error') {
-        duration = 15000; // 15 segundos para errores (más tiempo porque son importantes)
-    }
-    
-    // Remover la notificación después del tiempo especificado
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease-in';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, duration);
-}
+// Sistema de notificaciones eliminado - El feedback ahora se muestra en el botón de envío
