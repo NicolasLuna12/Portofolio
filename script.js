@@ -649,7 +649,6 @@ const setupConfettiButton = () => {
 document.addEventListener('DOMContentLoaded', function() {
     // Verificar que el archivo de configuración esté cargado
     if (typeof EMAIL_CONFIG === 'undefined') {
-        console.error('ERROR: config.js no está cargado. Por favor, crea el archivo config.js basándote en config.example.js');
         return;
     }
     
