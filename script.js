@@ -699,17 +699,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Enviar el email usando EmailJS
             emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
                 .then(function(response) {
-                    // Éxito - Pequeño delay para mejor UX
+                    // Éxito - Delay más largo para mejor transición
                     setTimeout(function() {
                         showNotification('✅ ¡Mensaje enviado con éxito! Te responderé pronto.', 'success');
-                    }, 800);
+                    }, 1500); // Aumentado a 1.5 segundos
                     
                     contactForm.reset();
                 }, function(error) {
-                    // Error - Pequeño delay para mejor UX
+                    // Error - Delay más largo para mejor transición
                     setTimeout(function() {
                         showNotification('❌ Hubo un error al enviar el mensaje. Por favor, intenta nuevamente o contáctame directamente por email.', 'error');
-                    }, 800);
+                    }, 1500); // Aumentado a 1.5 segundos
                 })
                 .finally(function() {
                     // Rehabilitar el botón
@@ -838,14 +838,14 @@ function showNotification(message, type = 'info') {
     // Agregar la notificación al body
     document.body.appendChild(notification);
     
-    // Duración según el tipo de notificación
-    let duration = 5000; // Por defecto 5 segundos
+    // Duración según el tipo de notificación (aumentada para mejor lectura)
+    let duration = 8000; // Por defecto 8 segundos
     if (type === 'info') {
-        duration = 8000; // 8 segundos para "Enviando..."
+        duration = 3000; // 3 segundos para "Enviando..." (se reemplaza rápido por el éxito)
     } else if (type === 'success') {
-        duration = 7000; // 7 segundos para éxito
+        duration = 12000; // 12 segundos para éxito (tiempo suficiente para leer)
     } else if (type === 'error') {
-        duration = 10000; // 10 segundos para errores
+        duration = 15000; // 15 segundos para errores (más tiempo porque son importantes)
     }
     
     // Remover la notificación después del tiempo especificado
