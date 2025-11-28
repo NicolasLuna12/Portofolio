@@ -453,20 +453,12 @@ const init = () => {
         }, TYPING_DELAY);
     }
     
+    // Setup EmailJS Contact Form
+    setupContactForm();
 };
 
-// Start when DOM is loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
-// ============================================
-// CONTACT FORM FUNCTIONALITY WITH EMAILJS
-// ============================================
-
-// Inicializar EmailJS cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
+// Contact Form with EmailJS
+const setupContactForm = () => {
     // Verificar que el archivo de configuración esté cargado
     if (typeof EMAIL_CONFIG === 'undefined') {
         return;
@@ -475,18 +467,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar EmailJS con la configuración
     emailjs.init(EMAIL_CONFIG.publicKey);
     
-    const contactForm = document.getElementById('contact-form');
-    
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener los valores del formulario
+            // Obtener los valores del formulario directamente
+            const formData = new FormData(contactForm);
+            
             const templateParams = {
-                nombre: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                asunto: document.getElementById('subject').value.trim(),
-                mensaje: document.getElementById('message').value.trim()
+                nombre: formData.get('name'),
+                email: formData.get('email'),
+                asunto: formData.get('subject'),
+                mensaje: formData.get('message')
             };
             
             // Deshabilitar el botón de envío
@@ -519,4 +511,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         });
     }
-});
+};
+
+// Start when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
