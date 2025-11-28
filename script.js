@@ -547,8 +547,6 @@ const initCertificatesCarousel = () => {
         return 3;
     };
     
-    const cardWidth = 350;
-    const gap = 32;
     let cardsToShow = getCardsToShow();
     let currentIndex = 0;
     let autoRotateInterval = null;
@@ -571,7 +569,19 @@ const initCertificatesCarousel = () => {
     const updateCarousel = () => {
         // Recalculate based on current window size
         cardsToShow = getCardsToShow();
-        const slideWidth = (cardWidth + gap);
+        
+        // En móvil usar 100% del contenedor, en desktop usar ancho fijo
+        let slideWidth;
+        if (window.innerWidth <= 480) {
+            // En móvil: 100% del contenedor (sin gap)
+            slideWidth = track.parentElement.offsetWidth;
+        } else {
+            // En desktop: ancho de tarjeta + gap
+            const cardWidth = 350;
+            const gap = 32;
+            slideWidth = (cardWidth + gap);
+        }
+        
         const offset = currentIndex * slideWidth * cardsToShow;
         track.style.transform = `translateX(-${offset}px)`;
         
