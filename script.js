@@ -412,6 +412,271 @@ const handleParallax = () => {
     });
 };
 
+// Load PDF Previews
+const loadPDFPreviews = () => {
+    if (typeof pdfjsLib === 'undefined') return;
+    
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    
+    // First, update all certificate cards to have the new structure
+    const allCards = document.querySelectorAll('.certificate-card');
+    allCards.forEach(card => {
+        const overlay = card.querySelector('.certificate-overlay');
+        const button = overlay?.querySelector('.btn-view-certificate');
+        const pdfUrl = button?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        
+        if (pdfUrl && !card.hasAttribute('data-pdf')) {
+            card.setAttribute('data-pdf', pdfUrl);
+            const imageDiv = card.querySelector('.certificate-image');
+            
+            // Check if canvas already exists
+            if (!imageDiv.querySelector('.pdf-preview')) {
+                // Remove old placeholder
+                const oldPlaceholder = imageDiv.querySelector('.certificate-placeholder');
+                if (oldPlaceholder) oldPlaceholder.remove();
+                
+                // Add new elements
+                const canvas = document.createElement('canvas');
+                canvas.className = 'pdf-preview';
+                imageDiv.insertBefore(canvas, imageDiv.firstChild);
+                
+                const loading = document.createElement('i');
+                loading.className = 'fas fa-spinner fa-spin certificate-loading';
+                imageDiv.insertBefore(loading, overlay);
+            }
+        }
+    });
+    
+    // Now load the previews
+    const cards = document.querySelectorAll('.certificate-card[data-pdf]');
+    
+    cards.forEach(card => {
+        const pdfUrl = card.getAttribute('data-pdf');
+        const canvas = card.querySelector('.pdf-preview');
+        const loading = card.querySelector('.certificate-loading');
+        
+        if (!canvas || !pdfUrl) return;
+        
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        
+        loadingTask.promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+                const viewport = page.getViewport({ scale: 1 });
+                const scale = canvas.parentElement.offsetWidth / viewport.width;
+                const scaledViewport = page.getViewport({ scale: scale * 0.9 });
+                
+                canvas.width = scaledViewport.width;
+                canvas.height = scaledViewport.height;
+                
+                const context = canvas.getContext('2d');
+                
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: scaledViewport
+                };
+                
+                page.render(renderContext).promise.then(() => {
+                    canvas.style.opacity = '1';
+                    if (loading) loading.style.display = 'none';
+                });
+            });
+        }).catch(error => {
+            if (loading) loading.style.display = 'none';
+            const placeholder = card.querySelector('.certificate-placeholder');
+            if (placeholder) placeholder.style.display = 'block';
+        });
+    });
+};
+
+// Certificate Modal
+const initCertificateModal = () => {
+    const modal = document.getElementById('certificate-modal');
+    const modalClose = document.getElementById('modal-close');
+    const pdfViewer = document.getElementById('modal-pdf-viewer');
+    
+    // Close modal on click outside or close button
+    const closeModal = () => {
+        modal.classList.remove('active');
+        pdfViewer.src = '';
+    };
+    
+    modalClose?.addEventListener('click', closeModal);
+    
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Close with ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Add click handlers to all certificate buttons
+    document.querySelectorAll('.btn-view-certificate').forEach(button => {
+        button.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const pdfUrl = button.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+            if (pdfUrl) {
+                pdfViewer.src = pdfUrl;
+                modal.classList.add('active');
+            }
+            return false;
+        };
+    });
+};
+
+// Certificates Carousel
+const initCertificatesCarousel = () => {
+    const track = document.getElementById('certificates-track');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dotsContainer = document.getElementById('carousel-dots');
+    
+    if (!track) return;
+    
+    // Load PDF previews first
+    loadPDFPreviews();
+    
+    // Initialize modal
+    setTimeout(() => initCertificateModal(), 500);
+    
+    const cards = Array.from(track.children);
+    const cardWidth = 350; // min-width + gap
+    const gap = 32; // 2rem
+    const cardsToShow = 3;
+    let currentIndex = 0;
+    let autoRotateInterval = null;
+    
+    // Create dots
+    const totalDots = Math.ceil(cards.length / cardsToShow);
+    for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('button');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+    }
+    
+    const dots = Array.from(dotsContainer.children);
+    
+    const updateCarousel = () => {
+        const offset = currentIndex * (cardWidth + gap) * cardsToShow;
+        track.style.transform = `translateX(-${offset}px)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === Math.floor(currentIndex));
+        });
+        
+        // Update buttons state
+        prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        prevBtn.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
+        nextBtn.style.opacity = currentIndex >= totalDots - 1 ? '0.5' : '1';
+        nextBtn.style.cursor = currentIndex >= totalDots - 1 ? 'not-allowed' : 'pointer';
+    };
+    
+    const goToSlide = (index) => {
+        currentIndex = Math.max(0, Math.min(index, totalDots - 1));
+        updateCarousel();
+    };
+    
+    // Touch/Swipe support for mobile
+    let startX = 0;
+    let isDragging = false;
+    
+    track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+    
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+    });
+    
+    track.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+            if (diff > 0 && currentIndex < totalDots - 1) {
+                currentIndex++;
+            } else if (diff < 0 && currentIndex > 0) {
+                currentIndex--;
+            }
+            updateCarousel();
+        }
+        isDragging = false;
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+            resetAutoRotate();
+        } else if (e.key === 'ArrowRight' && currentIndex < totalDots - 1) {
+            currentIndex++;
+            updateCarousel();
+            resetAutoRotate();
+        }
+    });
+    
+    // Auto-rotate function
+    const startAutoRotate = () => {
+        autoRotateInterval = setInterval(() => {
+            if (currentIndex < totalDots - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        }, 5000); // Rotate every 5 seconds
+    };
+    
+    const stopAutoRotate = () => {
+        if (autoRotateInterval) {
+            clearInterval(autoRotateInterval);
+            autoRotateInterval = null;
+        }
+    };
+    
+    const resetAutoRotate = () => {
+        stopAutoRotate();
+        startAutoRotate();
+    };
+    
+    // Pause auto-rotate on hover
+    track.addEventListener('mouseenter', stopAutoRotate);
+    track.addEventListener('mouseleave', startAutoRotate);
+    
+    // Pause auto-rotate on interaction
+    prevBtn?.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+            resetAutoRotate();
+        }
+    });
+    
+    nextBtn?.addEventListener('click', () => {
+        if (currentIndex < totalDots - 1) {
+            currentIndex++;
+            updateCarousel();
+            resetAutoRotate();
+        }
+    });
+    
+    updateCarousel();
+    startAutoRotate(); // Start auto-rotation
+};
+
 // Initialize Everything
 const init = () => {
     // Theme
@@ -426,6 +691,9 @@ const init = () => {
     animateCounters();
     animateSkillBars();
     observeElements();
+    
+    // Certificates Carousel
+    initCertificatesCarousel();
     
     // Projects
     loadGitHubProjects();
