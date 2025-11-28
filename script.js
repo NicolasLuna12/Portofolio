@@ -474,7 +474,8 @@ const loadPDFPreviews = async () => {
 window.openCertificateModal = (pdfUrl) => {
     const modal = document.getElementById('certificate-modal');
     const pdfViewer = document.getElementById('modal-pdf-viewer');
-    if (modal && pdfViewer && pdfUrl) {
+    // Validar que el path sea seguro antes de cargar
+    if (modal && pdfViewer && pdfUrl && pdfUrl.startsWith('certificados/') && pdfUrl.endsWith('.pdf')) {
         pdfViewer.src = pdfUrl;
         modal.classList.add('active');
     }
@@ -514,7 +515,8 @@ const initCertificateModal = () => {
     cards.forEach(card => {
         card.addEventListener('click', () => {
             const pdfUrl = card.getAttribute('data-pdf');
-            if (pdfUrl) {
+            // Validar que sea un path seguro
+            if (pdfUrl && pdfUrl.startsWith('certificados/') && pdfUrl.endsWith('.pdf')) {
                 window.openCertificateModal(pdfUrl);
             }
         });
@@ -774,6 +776,9 @@ const setupContactForm = () => {
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
             
+            // Función de sanitización para prevenir XSS
+            const sanitize = (str) => str.replace(/<[^>]*>/g, '').trim();
+            
             // Obtener datos del formulario manualmente y validar
             const nameValue = document.getElementById('name').value.trim();
             const emailValue = document.getElementById('email').value.trim();
@@ -792,11 +797,12 @@ const setupContactForm = () => {
                 return;
             }
             
+            // Sanitizar datos antes de enviar
             const templateParams = {
-                from_name: nameValue,
+                from_name: sanitize(nameValue),
                 from_email: emailValue,
-                subject: subjectValue,
-                message: messageValue
+                subject: sanitize(subjectValue),
+                message: sanitize(messageValue)
             };
             
             // Enviar el email usando EmailJS con los parámetros
