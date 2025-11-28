@@ -488,9 +488,17 @@ const initCertificatesCarousel = () => {
     const cards = Array.from(track.children);
     if (cards.length === 0) return;
     
+    // Responsive cards to show
+    const getCardsToShow = () => {
+        if (window.innerWidth <= 480) return 1;
+        if (window.innerWidth <= 768) return 1;
+        if (window.innerWidth <= 1024) return 2;
+        return 3;
+    };
+    
     const cardWidth = 350;
     const gap = 32;
-    const cardsToShow = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
+    let cardsToShow = getCardsToShow();
     let currentIndex = 0;
     let autoRotateInterval = null;
     
@@ -510,7 +518,10 @@ const initCertificatesCarousel = () => {
     const dots = Array.from(dotsContainer.children);
     
     const updateCarousel = () => {
-        const offset = currentIndex * (cardWidth + gap) * cardsToShow;
+        // Recalculate based on current window size
+        cardsToShow = getCardsToShow();
+        const slideWidth = (cardWidth + gap);
+        const offset = currentIndex * slideWidth * cardsToShow;
         track.style.transform = `translateX(-${offset}px)`;
         
         // Update dots
@@ -623,6 +634,11 @@ const initCertificatesCarousel = () => {
         }
     });
     
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+    
     updateCarousel();
     startAutoRotate(); // Start auto-rotation
 };
@@ -693,10 +709,10 @@ const setupContactForm = () => {
             const formData = new FormData(contactForm);
             
             const templateParams = {
-                nombre: formData.get('name'),
-                email: formData.get('email'),
-                asunto: formData.get('subject'),
-                mensaje: formData.get('message')
+                from_name: formData.get('name'),
+                reply_to: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message')
             };
             
             // Deshabilitar el botón de envío
