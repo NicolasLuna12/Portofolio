@@ -1195,7 +1195,10 @@ section {
     
     .hero-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto 2rem;
     }
     
     .about-stats {
@@ -1204,12 +1207,21 @@ section {
     
     .skills-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 1.5rem;
     }
     
     .skills-grid .skill-category:nth-child(4),
     .skills-grid .skill-category:nth-child(5) {
         grid-column: unset;
+    }
+    
+    .skill-category {
+        padding: 1.5rem 1.2rem;
+    }
+    
+    .category-title {
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
     }
     
     .certificates-carousel {
@@ -1256,6 +1268,21 @@ section {
     
     .hero-buttons .btn {
         width: 100%;
+        justify-content: center;
+        padding: 1rem 1.5rem;
+        font-size: 0.95rem;
+        min-height: 52px;
+    }
+    
+    .btn-android {
+        margin-left: 0 !important;
+    }
+    
+    .btn-android img {
+        width: 20px !important;
+    }
+    
+    .hero-social {
         justify-content: center;
     }
     
