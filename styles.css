@@ -635,6 +635,7 @@ section {
 .carousel-container {
     overflow: hidden;
     position: relative;
+    padding: 10px 0;
 }
 
 .carousel-track {
