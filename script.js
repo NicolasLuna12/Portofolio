@@ -412,30 +412,41 @@ const handleParallax = () => {
     });
 };
 
-// Load PDF Previews (simplified - just show placeholder)
+// Load PDF Previews
 const loadPDFPreviews = () => {
-    // Simply ensure all cards have the placeholder icon with info
     const allCards = document.querySelectorAll('.certificate-card');
     allCards.forEach(card => {
         const imageDiv = card.querySelector('.certificate-image');
-        if (!imageDiv) return;
+        const button = card.querySelector('.btn-view-certificate');
+        if (!imageDiv || !button) return;
         
-        const title = card.querySelector('h3')?.textContent?.trim() || 'Certificado';
-        const institution = card.querySelector('.certificate-institution')?.textContent?.trim() || '';
+        // Get PDF path and create image path
+        const pdfPath = button.getAttribute('data-pdf');
+        if (!pdfPath) return;
         
-        // Check if placeholder exists
-        if (!imageDiv.querySelector('.certificate-preview-content')) {
-            const previewContent = document.createElement('div');
-            previewContent.className = 'certificate-preview-content';
-            previewContent.innerHTML = `
-                <i class="fas fa-file-pdf certificate-placeholder"></i>
-                <div class="cert-preview-info">
-                    <p class="cert-preview-title">${title}</p>
-                    ${institution ? `<p class="cert-preview-institution">${institution}</p>` : ''}
-                </div>
-            `;
-            imageDiv.appendChild(previewContent);
-        }
+        // Extract filename without extension
+        const filename = pdfPath.split('/').pop().replace('.pdf', '');
+        const imagePath = `certificados/previews/${filename}.jpg`;
+        
+        // Try to load image, fallback to placeholder
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = card.querySelector('h3')?.textContent || 'Certificado';
+        
+        img.onload = () => {
+            // Image loaded successfully
+            imageDiv.innerHTML = '';
+            imageDiv.appendChild(img);
+        };
+        
+        img.onerror = () => {
+            // Image not found, use placeholder
+            if (!imageDiv.querySelector('.certificate-placeholder')) {
+                const placeholder = document.createElement('i');
+                placeholder.className = 'fas fa-file-pdf certificate-placeholder';
+                imageDiv.appendChild(placeholder);
+            }
+        };
     });
 };
 
