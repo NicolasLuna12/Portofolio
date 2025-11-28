@@ -1263,13 +1263,9 @@ section {
         padding: 0 2.5rem;
     }
     
-    .carousel-track {
-        gap: 0;
-    }
-    
     .certificate-card {
-        min-width: 100%;
-        max-width: 100%;
+        min-width: 280px;
+        max-width: 280px;
     }
     
     .certificate-image {
