@@ -412,42 +412,72 @@ const handleParallax = () => {
     });
 };
 
-// Load PDF Previews
-const loadPDFPreviews = () => {
+// Load PDF Previews using PDF.js
+const loadPDFPreviews = async () => {
+    // Configure PDF.js worker
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+    
     const allCards = document.querySelectorAll('.certificate-card');
-    allCards.forEach(card => {
+    
+    for (const card of allCards) {
         const imageDiv = card.querySelector('.certificate-image');
-        const button = card.querySelector('.btn-view-certificate');
-        if (!imageDiv || !button) return;
+        if (!imageDiv) continue;
         
-        // Get PDF path and create image path
-        const pdfPath = button.getAttribute('data-pdf');
-        if (!pdfPath) return;
+        const pdfPath = card.getAttribute('data-pdf');
+        if (!pdfPath) continue;
         
-        // Extract filename without extension
-        const filename = pdfPath.split('/').pop().replace('.pdf', '');
-        const imagePath = `certificados/previews/${filename}.jpg`;
-        
-        // Try to load image, fallback to placeholder
-        const img = document.createElement('img');
-        img.src = imagePath;
-        img.alt = card.querySelector('h3')?.textContent || 'Certificado';
-        
-        img.onload = () => {
-            // Image loaded successfully
+        try {
+            // Load PDF
+            const loadingTask = pdfjsLib.getDocument(pdfPath);
+            const pdf = await loadingTask.promise;
+            
+            // Get first page
+            const page = await pdf.getPage(1);
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            
+            // Set viewport to fit container with padding
+            const viewport = page.getViewport({ scale: 1 });
+            const scale = 300 / viewport.width; // Reducir a 300px para que se vea más chico
+            const scaledViewport = page.getViewport({ scale });
+            
+            canvas.width = scaledViewport.width;
+            canvas.height = scaledViewport.height;
+            
+            // Render PDF page to canvas
+            await page.render({
+                canvasContext: context,
+                viewport: scaledViewport
+            }).promise;
+            
+            // Replace content with canvas
             imageDiv.innerHTML = '';
-            imageDiv.appendChild(img);
-        };
-        
-        img.onerror = () => {
-            // Image not found, use placeholder
+            imageDiv.appendChild(canvas);
+            
+        } catch (error) {
+            console.error('Error loading PDF preview:', error);
+            // Fallback to placeholder
             if (!imageDiv.querySelector('.certificate-placeholder')) {
                 const placeholder = document.createElement('i');
                 placeholder.className = 'fas fa-file-pdf certificate-placeholder';
                 imageDiv.appendChild(placeholder);
             }
-        };
-    });
+        }
+    }
+};
+
+// Open Certificate Modal - Global function
+window.openCertificateModal = (pdfUrl) => {
+    const modal = document.getElementById('certificate-modal');
+    const pdfViewer = document.getElementById('modal-pdf-viewer');
+    if (modal && pdfViewer && pdfUrl) {
+        pdfViewer.src = pdfUrl;
+        modal.classList.add('active');
+    }
 };
 
 // Certificate Modal
@@ -456,15 +486,17 @@ const initCertificateModal = () => {
     const modalClose = document.getElementById('modal-close');
     const pdfViewer = document.getElementById('modal-pdf-viewer');
     
+    if (!modal || !modalClose || !pdfViewer) return;
+    
     // Close modal on click outside or close button
     const closeModal = () => {
         modal.classList.remove('active');
         pdfViewer.src = '';
     };
     
-    modalClose?.addEventListener('click', closeModal);
+    modalClose.addEventListener('click', closeModal);
     
-    modal?.addEventListener('click', (e) => {
+    modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeModal();
         }
@@ -477,18 +509,15 @@ const initCertificateModal = () => {
         }
     });
     
-    // Add click handlers to all certificate buttons using event delegation
-    document.addEventListener('click', (e) => {
-        const button = e.target.closest('.btn-view-certificate');
-        if (button) {
-            e.preventDefault();
-            e.stopPropagation();
-            const pdfUrl = button.getAttribute('data-pdf');
-            if (pdfUrl && modal && pdfViewer) {
-                pdfViewer.src = pdfUrl;
-                modal.classList.add('active');
+    // Add click handlers to certificate cards
+    const cards = document.querySelectorAll('.certificate-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const pdfUrl = card.getAttribute('data-pdf');
+            if (pdfUrl) {
+                window.openCertificateModal(pdfUrl);
             }
-        }
+        });
     });
 };
 
@@ -503,11 +532,11 @@ const initCertificatesCarousel = () => {
     
     const cards = Array.from(track.children);
     
-    // Load PDF previews first
-    loadPDFPreviews();
+    // Initialize modal immediately so clicks work right away
+    initCertificateModal();
     
-    // Initialize modal after previews are loaded
-    setTimeout(() => initCertificateModal(), 100);
+    // Load PDF previews in background
+    loadPDFPreviews();
     if (cards.length === 0) return;
     
     // Responsive cards to show
