@@ -412,79 +412,20 @@ const handleParallax = () => {
     });
 };
 
-// Load PDF Previews
+// Load PDF Previews (simplified - just show placeholder)
 const loadPDFPreviews = () => {
-    if (typeof pdfjsLib === 'undefined') return;
-    
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    
-    // First, update all certificate cards to have the new structure
+    // Simply ensure all cards have the placeholder icon
     const allCards = document.querySelectorAll('.certificate-card');
     allCards.forEach(card => {
-        const overlay = card.querySelector('.certificate-overlay');
-        const button = overlay?.querySelector('.btn-view-certificate');
-        const pdfUrl = button?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        const imageDiv = card.querySelector('.certificate-image');
+        if (!imageDiv) return;
         
-        if (pdfUrl && !card.hasAttribute('data-pdf')) {
-            card.setAttribute('data-pdf', pdfUrl);
-            const imageDiv = card.querySelector('.certificate-image');
-            
-            // Check if canvas already exists
-            if (!imageDiv.querySelector('.pdf-preview')) {
-                // Remove old placeholder
-                const oldPlaceholder = imageDiv.querySelector('.certificate-placeholder');
-                if (oldPlaceholder) oldPlaceholder.remove();
-                
-                // Add new elements
-                const canvas = document.createElement('canvas');
-                canvas.className = 'pdf-preview';
-                imageDiv.insertBefore(canvas, imageDiv.firstChild);
-                
-                const loading = document.createElement('i');
-                loading.className = 'fas fa-spinner fa-spin certificate-loading';
-                imageDiv.insertBefore(loading, overlay);
-            }
+        // Check if placeholder exists
+        if (!imageDiv.querySelector('.certificate-placeholder')) {
+            const placeholder = document.createElement('i');
+            placeholder.className = 'fas fa-file-pdf certificate-placeholder';
+            imageDiv.insertBefore(placeholder, imageDiv.firstChild);
         }
-    });
-    
-    // Now load the previews
-    const cards = document.querySelectorAll('.certificate-card[data-pdf]');
-    
-    cards.forEach(card => {
-        const pdfUrl = card.getAttribute('data-pdf');
-        const canvas = card.querySelector('.pdf-preview');
-        const loading = card.querySelector('.certificate-loading');
-        
-        if (!canvas || !pdfUrl) return;
-        
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
-        
-        loadingTask.promise.then(pdf => {
-            pdf.getPage(1).then(page => {
-                const viewport = page.getViewport({ scale: 1 });
-                const scale = canvas.parentElement.offsetWidth / viewport.width;
-                const scaledViewport = page.getViewport({ scale: scale * 0.9 });
-                
-                canvas.width = scaledViewport.width;
-                canvas.height = scaledViewport.height;
-                
-                const context = canvas.getContext('2d');
-                
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: scaledViewport
-                };
-                
-                page.render(renderContext).promise.then(() => {
-                    canvas.style.opacity = '1';
-                    if (loading) loading.style.display = 'none';
-                });
-            });
-        }).catch(error => {
-            if (loading) loading.style.display = 'none';
-            const placeholder = card.querySelector('.certificate-placeholder');
-            if (placeholder) placeholder.style.display = 'block';
-        });
     });
 };
 
@@ -517,16 +458,15 @@ const initCertificateModal = () => {
     
     // Add click handlers to all certificate buttons
     document.querySelectorAll('.btn-view-certificate').forEach(button => {
-        button.onclick = (e) => {
+        button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            const pdfUrl = button.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+            const pdfUrl = button.getAttribute('data-pdf');
             if (pdfUrl) {
                 pdfViewer.src = pdfUrl;
                 modal.classList.add('active');
             }
-            return false;
-        };
+        });
     });
 };
 
@@ -546,19 +486,24 @@ const initCertificatesCarousel = () => {
     setTimeout(() => initCertificateModal(), 500);
     
     const cards = Array.from(track.children);
-    const cardWidth = 350; // min-width + gap
-    const gap = 32; // 2rem
-    const cardsToShow = 3;
+    if (cards.length === 0) return;
+    
+    const cardWidth = 350;
+    const gap = 32;
+    const cardsToShow = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3;
     let currentIndex = 0;
     let autoRotateInterval = null;
     
     // Create dots
-    const totalDots = Math.ceil(cards.length / cardsToShow);
+    const totalDots = Math.max(1, Math.ceil(cards.length / cardsToShow));
     for (let i = 0; i < totalDots; i++) {
         const dot = document.createElement('button');
         dot.classList.add('carousel-dot');
         if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
+        dot.addEventListener('click', () => {
+            goToSlide(i);
+            resetAutoRotate();
+        });
         dotsContainer.appendChild(dot);
     }
     
@@ -570,14 +515,18 @@ const initCertificatesCarousel = () => {
         
         // Update dots
         dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === Math.floor(currentIndex));
+            dot.classList.toggle('active', index === currentIndex);
         });
         
         // Update buttons state
-        prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-        prevBtn.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
-        nextBtn.style.opacity = currentIndex >= totalDots - 1 ? '0.5' : '1';
-        nextBtn.style.cursor = currentIndex >= totalDots - 1 ? 'not-allowed' : 'pointer';
+        if (prevBtn) {
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            prevBtn.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
+        }
+        if (nextBtn) {
+            nextBtn.style.opacity = currentIndex >= totalDots - 1 ? '0.5' : '1';
+            nextBtn.style.cursor = currentIndex >= totalDots - 1 ? 'not-allowed' : 'pointer';
+        }
     };
     
     const goToSlide = (index) => {
@@ -611,6 +560,7 @@ const initCertificatesCarousel = () => {
                 currentIndex--;
             }
             updateCarousel();
+            resetAutoRotate();
         }
         isDragging = false;
     });
