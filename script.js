@@ -414,17 +414,27 @@ const handleParallax = () => {
 
 // Load PDF Previews (simplified - just show placeholder)
 const loadPDFPreviews = () => {
-    // Simply ensure all cards have the placeholder icon
+    // Simply ensure all cards have the placeholder icon with info
     const allCards = document.querySelectorAll('.certificate-card');
     allCards.forEach(card => {
         const imageDiv = card.querySelector('.certificate-image');
         if (!imageDiv) return;
         
+        const title = card.querySelector('h3')?.textContent?.trim() || 'Certificado';
+        const institution = card.querySelector('.certificate-institution')?.textContent?.trim() || '';
+        
         // Check if placeholder exists
-        if (!imageDiv.querySelector('.certificate-placeholder')) {
-            const placeholder = document.createElement('i');
-            placeholder.className = 'fas fa-file-pdf certificate-placeholder';
-            imageDiv.insertBefore(placeholder, imageDiv.firstChild);
+        if (!imageDiv.querySelector('.certificate-preview-content')) {
+            const previewContent = document.createElement('div');
+            previewContent.className = 'certificate-preview-content';
+            previewContent.innerHTML = `
+                <i class="fas fa-file-pdf certificate-placeholder"></i>
+                <div class="cert-preview-info">
+                    <p class="cert-preview-title">${title}</p>
+                    ${institution ? `<p class="cert-preview-institution">${institution}</p>` : ''}
+                </div>
+            `;
+            imageDiv.appendChild(previewContent);
         }
     });
 };
@@ -705,16 +715,6 @@ const setupContactForm = () => {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener los valores del formulario directamente
-            const formData = new FormData(contactForm);
-            
-            const templateParams = {
-                from_name: formData.get('name'),
-                reply_to: formData.get('email'),
-                subject: formData.get('subject'),
-                message: formData.get('message')
-            };
-            
             // Deshabilitar el botón de envío
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
@@ -722,8 +722,8 @@ const setupContactForm = () => {
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
             
-            // Enviar el email usando EmailJS
-            emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
+            // Enviar el email usando EmailJS directamente desde el formulario
+            emailjs.sendForm(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, contactForm)
                 .then(function(response) {
                     // Éxito - Transformar botón en verde con check
                     submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>¡Mensaje Enviado!</span>';
