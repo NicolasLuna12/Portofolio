@@ -466,17 +466,18 @@ const initCertificateModal = () => {
         }
     });
     
-    // Add click handlers to all certificate buttons
-    document.querySelectorAll('.btn-view-certificate').forEach(button => {
-        button.addEventListener('click', (e) => {
+    // Add click handlers to all certificate buttons using event delegation
+    document.addEventListener('click', (e) => {
+        const button = e.target.closest('.btn-view-certificate');
+        if (button) {
             e.preventDefault();
             e.stopPropagation();
             const pdfUrl = button.getAttribute('data-pdf');
-            if (pdfUrl) {
+            if (pdfUrl && modal && pdfViewer) {
                 pdfViewer.src = pdfUrl;
                 modal.classList.add('active');
             }
-        });
+        }
     });
 };
 
@@ -489,13 +490,13 @@ const initCertificatesCarousel = () => {
     
     if (!track) return;
     
+    const cards = Array.from(track.children);
+    
     // Load PDF previews first
     loadPDFPreviews();
     
-    // Initialize modal
-    setTimeout(() => initCertificateModal(), 500);
-    
-    const cards = Array.from(track.children);
+    // Initialize modal after previews are loaded
+    setTimeout(() => initCertificateModal(), 100);
     if (cards.length === 0) return;
     
     // Responsive cards to show
@@ -722,9 +723,20 @@ const setupContactForm = () => {
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Enviando...</span>';
             
-            // Enviar el email usando EmailJS directamente desde el formulario
-            emailjs.sendForm(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, contactForm)
+            // Obtener datos del formulario manualmente
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            console.log('Enviando email con:', templateParams);
+            
+            // Enviar el email usando EmailJS con los parámetros
+            emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, templateParams)
                 .then(function(response) {
+                    console.log('Email enviado exitosamente:', response);
                     // Éxito - Transformar botón en verde con check
                     submitButton.innerHTML = '<i class="fas fa-check-circle"></i> <span>¡Mensaje Enviado!</span>';
                     submitButton.style.cssText = originalButtonStyle + 'background: #10b981 !important; cursor: not-allowed;';
@@ -732,6 +744,7 @@ const setupContactForm = () => {
                     // Limpiar formulario
                     contactForm.reset();
                 }, function(error) {
+                    console.error('Error al enviar email:', error);
                     // Error - Mostrar error en el botón
                     submitButton.innerHTML = '<i class="fas fa-exclamation-circle"></i> <span>Error - Intenta nuevamente</span>';
                     submitButton.style.cssText = originalButtonStyle + 'background: #ef4444 !important;';
