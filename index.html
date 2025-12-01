@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicolas Luna - Técnico Superior en Desarrollo Web y Apps Móviles</title>
+    <title>Nicolas Luna - Técnico Superior en Desarrollo Web y Apps Digitales</title>
     <link rel="icon" type="image/x-icon" href="logo.jpg?v=2">
     <link rel="shortcut icon" type="image/x-icon" href="logo.jpg?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="logo.jpg?v=2">
@@ -53,11 +53,11 @@
                 <h1 class="hero-title">
                     <span data-es="Hola, soy" data-en="Hi, I'm">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
                 </h1>
-                <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Móviles" data-en="Senior Web & Mobile App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Móviles</h2>
-                <p class="hero-description" data-es="Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones móviles. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and mobile app development. Focused on robust solutions and clean code.">
+                <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Digitales" data-en="Senior Web & Digital App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Digitales</h2>
+                <p class="hero-description" data-es="Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and digital app development. Focused on robust solutions and clean code.">
                     Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
                     Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales 
-                    y desarrollo de aplicaciones móviles. Enfocado en soluciones robustas y código limpio.
+                    y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects">Ver Proyectos</a>
@@ -123,7 +123,7 @@ class SystemHealthView(APIView):
                     </p>
                     <p data-translate="about_description_2">
                         Mi formación técnica incluye diseño de APIs RESTful, optimización de bases de datos SQL/NoSQL, 
-                        desarrollo de aplicaciones móviles y despliegues en cloud (AWS/Google Cloud). Comprometido con 
+                        desarrollo de aplicaciones digitales y despliegues en cloud (AWS/Google Cloud). Comprometido con 
                         las mejores prácticas: código limpio, testing automatizado y documentación técnica profesional.
                     </p>
                     <div class="about-stats">
@@ -804,14 +804,17 @@ class SystemHealthView(APIView):
             </div>
             <h3>Credenciales de Demo</h3>
             <p style="font-size:0.98rem; color:var(--text-secondary,#a0a0a0); margin-bottom:1.1rem;">
-                <strong>Nota:</strong> Este acceso es solo para fines de demostración. El entorno y los datos pueden ser restablecidos o modificados en cualquier momento.<br>
-                <strong>Advertencia:</strong> Los servidores de la demo <u>no están disponibles 24/7</u>. Si están apagados, pueden demorar hasta <b>1:30 minutos</b> en volver a estar online tras el primer acceso.
+                <strong style="color: #ffd700;">Nota:</strong> Este acceso es solo para fines de demostración. El entorno y los datos pueden ser restablecidos o modificados en cualquier momento.<br>
+                <strong style="color: #ffd700;">Advertencia:</strong> Los servidores de la demo <u>no están disponibles 24/7</u>. Si están apagados, pueden demorar hasta <b>1:30 minutos</b> en volver a estar online tras el primer acceso.
             </p>
             <div class="modal-credentials">
                 <div><span class="modal-label">Usuario:</span> <span class="modal-value">demo@demo.com</span></div>
                 <div><span class="modal-label">Contraseña:</span> <span class="modal-value">demo1234</span></div>
             </div>
-            <button id="go-demo-login" class="btn btn-primary demo-btn-modal"><i class="fas fa-sign-in-alt"></i> Ir al Login</button>
+            <div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; align-items: center;">
+                <button id="go-demo-login" class="btn btn-success demo-btn-modal"><i class="fas fa-sign-in-alt"></i> Ir al Login</button>
+                <a href="https://presentacionispcfood.netlify.app/" target="_blank" class="btn btn-secondary demo-btn-modal" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-presentation"></i> Presentación del producto</a>
+            </div>
         </div>
     </div>
     <style>
@@ -821,12 +824,13 @@ class SystemHealthView(APIView):
     }
     .modal-content.demo-modal-content {
         background: var(--bg-secondary, #1a1a1a);
-        padding: 2.5rem 2.5rem 2rem 2.5rem;
-        border-radius: 18px;
+        padding: 2rem 2.5rem 1.8rem 2.5rem;
+        border-radius: 16px;
         box-shadow: var(--shadow, 0 6px 32px #0003);
         text-align: center;
         font-family: 'Inter', Arial, sans-serif;
-        min-width: 340px;
+        max-width: 600px;
+        width: 90%;
         position: relative;
         color: var(--text-primary, #fff);
         border: 2.5px solid var(--primary-color, #0070f3);
@@ -866,21 +870,40 @@ class SystemHealthView(APIView):
     color: var(--text-primary, #fff);
     }
     .demo-btn-modal {
-    margin-top: 1.2rem !important;
-    font-size: 1.08rem !important;
-    padding: 0.7em 1.5em !important;
-    border-radius: 7px !important;
-    background: var(--primary-color, #0070f3) !important;
-    color: var(--text-primary, #fff) !important;
+    margin-top: 0 !important;
+    font-size: 0.95rem !important;
+    padding: 0.75em 1.3em !important;
+    border-radius: 8px !important;
     font-weight: 600 !important;
-    box-shadow: 0 2px 8px var(--primary-color, #0070f3)33;
-    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    border: none !important;
+    cursor: pointer;
+    max-width: 320px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
     }
     .demo-btn-modal i {
         margin-right: 0.5em;
     }
-    .demo-btn-modal:hover {
-    background: var(--accent-color, #00d9ff) !important;
+    .demo-btn-modal.btn-success {
+        background: linear-gradient(135deg, #34a853, #a8e063) !important;
+        color: white !important;
+    }
+    .demo-btn-modal.btn-success:hover {
+        background: linear-gradient(135deg, #218838, #6fdc6f) !important;
+        transform: translateY(-2px);
+    }
+    .demo-btn-modal.btn-secondary {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e53) !important;
+        color: white !important;
+    }
+    .demo-btn-modal.btn-secondary:hover {
+        background: linear-gradient(135deg, #ff5252, #ff7043) !important;
+        transform: translateY(-2px);
     }
     .close-modal {
     position: absolute; right: 1.5rem; top: 1.2rem; font-size: 2rem; cursor: pointer; color: var(--primary-color, #0070f3); transition: color 0.2s;
