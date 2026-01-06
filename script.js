@@ -47,10 +47,12 @@ const manageChristmasTree = () => {
     if (!christmasTree) return;
     
     const today = new Date();
-    const january1st = new Date(today.getFullYear(), 0, 1); // 0 = enero, 1 = día 1
+    const currentMonth = today.getMonth(); // 0 = enero, 11 = diciembre
     
-    // Ocultar el arbolito el 1 de enero o después
-    if (today >= january1st && today.getMonth() === 0 && today.getDate() === 1) {
+    // Mostrar el árbol solo durante todo diciembre (1-31)
+    if (currentMonth === 11) {
+        christmasTree.style.display = 'inline';
+    } else {
         christmasTree.style.display = 'none';
     }
 };
