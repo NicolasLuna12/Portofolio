@@ -29,9 +29,6 @@ window.console = {
 const ANIMATION_DURATION = 2000;
 const FRAME_DURATION = 16;
 const REPOS_PER_PAGE = 100;
-const MAX_PROJECTS = 20;
-const TYPING_SPEED = 150;
-const TYPING_DELAY = 1000;
 const GITHUB_USERNAME = 'NicolasLuna12';
 
 // DOM Elements
@@ -173,20 +170,26 @@ const animateCounters = () => {
 
 // Skill Bars Animation
 const animateSkillBars = () => {
-    const skillBars = document.querySelectorAll('.skill-progress');
+    // Aplicar colores a los niveles de habilidad
+    const skillLevels = document.querySelectorAll('.skill-level');
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target;
-                const width = progressBar.getAttribute('data-width');
-                progressBar.style.width = width + '%';
-                observer.unobserve(entry.target);
-            }
-        });
+    skillLevels.forEach(level => {
+        const text = level.textContent.trim();
+        
+        if (text === 'Avanzado') {
+            level.style.background = 'rgba(0, 255, 136, 0.1)';
+            level.style.color = 'var(--success-color, #00ff88)';
+            level.style.borderColor = 'var(--success-color, #00ff88)';
+        } else if (text === 'Intermedio') {
+            level.style.background = 'rgba(0, 112, 243, 0.1)';
+            level.style.color = 'var(--primary-color, #0070f3)';
+            level.style.borderColor = 'var(--primary-color, #0070f3)';
+        } else if (text === 'Básico') {
+            level.style.background = 'rgba(255, 170, 0, 0.1)';
+            level.style.color = 'var(--warning-color, #ffaa00)';
+            level.style.borderColor = 'var(--warning-color, #ffaa00)';
+        }
     });
-    
-    skillBars.forEach(bar => observer.observe(bar));
 };
 
 // GitHub Projects Integration
@@ -220,77 +223,131 @@ const loadGitHubProjects = async () => {
     }
 };
 
-const PROJECT_CONFIG = {
-    'backmobile1': {
-        displayName: 'Backend Principal',
-        description: 'Backend Main'
-    },
-    'frontprod': {
-        displayName: 'Frontend Principal',
-        description: 'Frontend Main'
-    },
-    'back2fa': {
-        displayName: 'Microservicio Autentificación 2FA',
-        description: 'Servicio de autenticación en 2 pasos'
-    },
-    'backmp': {
-        displayName: 'Microservicio MercadoPago',
-        description: 'Servicio de gestion de pagos con MercadoPago'
-    },
-    'Android-Tesis-2025': {
-        displayName: 'Aplicación Android',
-        description: 'Aplicación Android Pura'
-    }
+// Configuración del proyecto ISPC FOOD (todos los repos relacionados)
+const ISPC_FOOD_REPOS = {
+    'backmobile1': 'Backend Principal',
+    'frontprod': 'Frontend Principal',
+    'back2fa': 'Microservicio Autentificación 2FA',
+    'backmp': 'Microservicio MercadoPago',
+    'Android-Tesis-2025': 'Aplicación Android'
 };
 
 const EXCLUDED_REPOS = ['nicolasluna12', 'NicolasLuna12', 'Portofolio', 'portofolio'];
 const STAR_WEIGHT = 1000000;
 
 const displayProjects = (repos) => {
-    const filteredRepos = repos.filter(repo => 
-        !repo.fork && 
-        repo.size > 0 &&
-        !EXCLUDED_REPOS.includes(repo.name)
-    ).sort((a, b) => {
+    // Separar repos de ISPC FOOD y Proyectido de otros proyectos
+    const ispcFoodRepos = [];
+    const otherRepos = [];
+    
+    let proyectidoRepoData = null;
+    
+    repos.forEach(repo => {
+        if (ISPC_FOOD_REPOS.hasOwnProperty(repo.name)) {
+            ispcFoodRepos.push(repo);
+        } else if (repo.name === 'Proyectido') {
+            proyectidoRepoData = repo;
+        } else if (!repo.fork && repo.size > 0 && !EXCLUDED_REPOS.includes(repo.name)) {
+            otherRepos.push(repo);
+        }
+    });
+    
+    // Ordenar otros proyectos
+    otherRepos.sort((a, b) => {
         const aScore = new Date(a.updated_at).getTime() + (a.stargazers_count * STAR_WEIGHT);
         const bScore = new Date(b.updated_at).getTime() + (b.stargazers_count * STAR_WEIGHT);
         return bScore - aScore;
     });
     
-    // Agregar el proyecto Android si no está en los filtrados
-    if (!filteredRepos.find(r => r.name === 'Android-Tesis-2025')) {
-        // Agregar manualmente el proyecto Android-Tesis-2025 si no está en GitHub
-        const androidProject = {
-            name: 'Android-Tesis-2025',
-            description: 'Aplicación Android - Sistema de gestión de alimentos',
-            html_url: 'https://github.com/NicolasLuna12/Android-Tesis-2025',
-            language: 'Java',
-            stargazers_count: 0,
-            forks_count: 0,
-            watchers_count: 0,
-            updated_at: new Date().toISOString()
-        };
-        filteredRepos.unshift(androidProject); // Lo ponemos al principio
+    let projectsHTML = '';
+    
+    // Crear tarjeta consolidada de ISPC FOOD si hay repos
+    if (ispcFoodRepos.length > 0) {
+        const totalStars = ispcFoodRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        const totalForks = ispcFoodRepos.reduce((sum, repo) => sum + repo.forks_count, 0);
+        const totalWatchers = ispcFoodRepos.reduce((sum, repo) => sum + repo.watchers_count, 0);
+        
+        // Crear enlaces a cada repositorio
+        const repoLinks = ispcFoodRepos.map(repo => {
+            const repoName = ISPC_FOOD_REPOS[repo.name] || repo.name;
+            return `
+                <a href="${repo.html_url}" target="_blank" class="ispc-repo-link">
+                    <i class="fab fa-github"></i>
+                    ${repoName}
+                </a>
+            `;
+        }).join('');
+        
+        projectsHTML += `
+            <div class="project-card ispc-food-card fade-in">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">ISPC FOOD</h3>
+                    </div>
+                    <div class="project-language">
+                        <span class="language-badge">Full Stack</span>
+                    </div>
+                </div>
+                <p class="project-description">Proyecto de ecommerce completo con arquitectura de microservicios, aplicación móvil nativa Android y sistema de pagos integrado.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">Angular</span>
+                    <span class="tech-tag">Android</span>
+                    <span class="tech-tag">MercadoPago</span>
+                    <span class="tech-tag">2FA</span>
+                    <span class="tech-tag">MongoDB</span>
+                </div>
+                <div class="ispc-repos-section">
+                    <h4 class="repos-title">Repositorios del Proyecto:</h4>
+                    <div class="repos-grid">
+                        ${repoLinks}
+                    </div>
+                </div>
+            </div>
+        `;
     }
     
-    const projectsHTML = filteredRepos.map(repo => {
+    // Crear tarjeta de Proyectido si existe
+    if (proyectidoRepoData) {
+        projectsHTML += `
+            <div class="project-card ispc-food-card fade-in">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">Proyect I DO</h3>
+                    </div>
+                    <div class="project-language">
+                        <span class="language-badge">Kotlin</span>
+                    </div>
+                </div>
+                <p class="project-description">Aplicación principal para organizar tu fiesta de casamiento, con el extra de una red social para el evento.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Gestión de Eventos</span>
+                    <span class="tech-tag">Red Social</span>
+                    <span class="tech-tag">Bodas</span>
+                </div>
+                <div class="ispc-repos-section">
+                    <h4 class="repos-title">Repositorio del Proyecto:</h4>
+                    <div class="repos-grid single-repo">
+                        <a href="${proyectidoRepoData.html_url}" target="_blank" class="ispc-repo-link">
+                            <i class="fab fa-github"></i>
+                            Repositorio Principal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Agregar otros proyectos
+    projectsHTML += otherRepos.map(repo => {
         const techStack = getTechStack(repo.name, repo.description || '');
-        const config = PROJECT_CONFIG[repo.name];
-        
-        const displayName = config?.displayName || repo.name;
-        const customDescription = config?.description || repo.description || 'Proyecto de desarrollo';
-        const customDemoUrl = null;
+        const customDescription = repo.description || 'Proyecto de desarrollo';
         
         return `
             <div class="project-card fade-in">
                 <div class="project-header">
                     <div>
-                        <h3 class="project-title">${displayName}</h3>
-                        <div class="project-stats">
-                            <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
-                            <span><i class="fas fa-code-branch"></i> ${repo.forks_count}</span>
-                            <span><i class="fas fa-eye"></i> ${repo.watchers_count}</span>
-                        </div>
+                        <h3 class="project-title">${repo.name}</h3>
                     </div>
                     <div class="project-language">
                         ${repo.language ? `<span class="language-badge">${repo.language}</span>` : ''}
@@ -305,12 +362,7 @@ const displayProjects = (repos) => {
                         <i class="fab fa-github"></i>
                         Código
                     </a>
-                    ${customDemoUrl ? `
-                        <a href="${customDemoUrl}" target="_blank" class="project-link">
-                            <i class="fas fa-external-link-alt"></i>
-                            Ver Demo
-                        </a>
-                    ` : repo.homepage ? `
+                    ${repo.homepage ? `
                         <a href="${repo.homepage}" target="_blank" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Demo
