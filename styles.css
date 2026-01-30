@@ -51,7 +51,7 @@ body {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -76,7 +76,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem 2rem;
 }
@@ -85,13 +85,6 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.nav-logo:hover {
-    text-decoration: none;
 }
 
 .nav-logo-img {
@@ -249,7 +242,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
@@ -261,7 +254,6 @@ body {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
-    white-space: nowrap;
 }
 
 .highlight {
@@ -594,7 +586,7 @@ section {
 }
 
 .experience-timeline {
-    max-width: 1400px;
+    max-width: 900px;
     margin: 0 auto;
     position: relative;
     padding-left: 3rem;
@@ -1081,7 +1073,7 @@ section {
 .modal-content {
     position: relative;
     width: 90%;
-    max-width: 1400px;
+    max-width: 1200px;
     height: 90vh;
     background: var(--bg-secondary);
     border-radius: var(--border-radius);

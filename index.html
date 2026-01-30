@@ -22,17 +22,18 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="nav-logo">
+            <div class="nav-logo">
                 <img src="logo.jpg" alt="Nicolas Luna Logo" class="nav-logo-img">
                 <span>Nicolas Luna</span>
                 <span class="christmas-tree" id="christmas-tree" title="¡Felices Fiestas!">🎄</span>
-            </a>
+            </div>
             <div class="nav-menu">
                 <a href="#home" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a>
                 <a href="#about" class="nav-link" data-es="Sobre mí" data-en="About">Sobre mí</a>
                 <a href="#experience" class="nav-link" data-es="Experiencia" data-en="Experience">Experiencia</a>
                 <a href="#skills" class="nav-link" data-es="Skills" data-en="Skills">Skills</a>
                 <a href="#certificates" class="nav-link" data-es="Certificados" data-en="Certificates">Certificados</a>
+                <a href="#contact" class="nav-link" data-es="Contacto" data-en="Contact">Contacto</a>
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -54,8 +55,8 @@
                     <span data-es="Hola, soy" data-en="Hi, I'm">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
                 </h1>
                 <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Digitales" data-en="Senior Web & Digital App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Digitales</h2>
-                <p class="hero-description" data-es="Especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio." data-en="Specialized in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and digital app development. Focused on robust solutions and clean code.">
-                    Especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
+                <p class="hero-description" data-es="Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and digital app development. Focused on robust solutions and clean code.">
+                    Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
                     Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales 
                     y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio.
                 </p>
@@ -117,16 +118,14 @@ class SystemHealthView(APIView):
             <div class="about-content">
                 <div class="about-text">
                     <p data-translate="about_description_1">
-                        Desde que comencé mi carrera como desarrollador, me ha apasionado resolver problemas complejos 
-                        a través de la tecnología. Mi trayectoria me ha llevado desde el aprendizaje académico hasta la 
-                        experiencia práctica en empresas, donde he trabajado tanto en sistemas modernos como en la 
-                        modernización de aplicaciones legacy críticas para el negocio.
+                        Con 3+ años de experiencia en desarrollo de sistemas backend robustos y escalables. 
+                        Especializado en Python/Django para aplicaciones web modernas y COBOL para 
+                        mantenimiento de sistemas legacy empresariales.
                     </p>
                     <p data-translate="about_description_2">
-                        Me motiva crear soluciones que realmente impacten en la vida de las personas. He tenido la 
-                        oportunidad de desarrollar desde sistemas de ecommerce completos hasta aplicaciones móviles, 
-                        siempre buscando el equilibrio entre innovación técnica y usabilidad. Creo firmemente en el 
-                        aprendizaje continuo y en compartir conocimiento con la comunidad de desarrollo.
+                        Mi formación técnica incluye diseño de APIs RESTful, optimización de bases de datos SQL/NoSQL, 
+                        desarrollo de aplicaciones digitales y despliegues en cloud (AWS/Google Cloud). Comprometido con 
+                        las mejores prácticas: código limpio, testing automatizado y documentación técnica profesional.
                     </p>
                     <div class="about-stats">
                         <div class="stat">
@@ -671,7 +670,7 @@ class SystemHealthView(APIView):
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
-                        <span data-translate="contact_availability">Disponible para proyectos freelance y oportunidades laborales</span>
+                        <span data-translate="contact_availability">Disponible para todo tipo de proyectos</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-file-pdf"></i>
