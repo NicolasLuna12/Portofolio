@@ -11,12 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Nicolas Luna - Desarrollador Full Stack">
     <meta property="og:description" content="Desarrollador Full Stack especializado en Python/Django, .NET/Blazor y desarrollo móvil Android.">
-    <meta property="og:image" content="logo.jpg">
+    <meta property="og:image" content="https://nicolasluna.dev/logo.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Nicolas Luna - Desarrollador Full Stack">
     <meta property="twitter:description" content="Desarrollador Full Stack especializado en Python/Django, .NET/Blazor y desarrollo móvil Android.">
+    <meta property="og:url" content="https://nicolasluna.dev">
+    <link rel="canonical" href="https://nicolasluna.dev">
     
     <title>Nicolas Luna - Técnico Superior en Desarrollo Web y Apps Digitales</title>
     <link rel="icon" type="image/x-icon" href="logo.jpg?v=2">
@@ -29,16 +31,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="logo.jpg" alt="Nicolas Luna Logo" class="nav-logo-img">
+                <img src="logo.jpg" alt="Nicolas Luna Logo" class="nav-logo-img" width="40" height="40">
                 <span>Nicolas Luna</span>
             </div>
             <div class="nav-menu">
@@ -51,18 +53,18 @@
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button class="lang-toggle" id="lang-toggle">ES</button>
+                <button class="lang-toggle" id="lang-toggle" aria-label="Cambiar idioma">ES</button>
             </div>
-            <div class="hamburger">
+            <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero" role="main" aria-label="Sección principal">
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
@@ -81,10 +83,10 @@
                     <button id="demo-android-btn" class="btn btn-android" type="button"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png" alt="Android" class="android-icon"> Ver demo Android</button>
                 </div>
                 <div class="hero-social">
-                    <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
+                    <a href="https://github.com/NicolasLuna12" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Perfil de GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/nicolas-luna-632612106/" target="_blank" class="social-link">
+                    <a href="https://www.linkedin.com/in/nicolas-luna-632612106/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Perfil de LinkedIn">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
@@ -616,11 +618,11 @@ class SystemHealthView(APIView):
                     </div>
                     <div class="contact-item">
                         <i class="fab fa-github"></i>
-                        <a href="https://github.com/NicolasLuna12" target="_blank">GitHub</a>
+                        <a href="https://github.com/NicolasLuna12" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </div>
                     <div class="contact-item">
                         <i class="fab fa-linkedin"></i>
-                        <a href="https://www.linkedin.com/in/nicolas-luna-632612106/" target="_blank">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/nicolas-luna-632612106/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
@@ -685,7 +687,7 @@ class SystemHealthView(APIView):
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; align-items: center;">
                 <button id="go-demo-login" class="btn btn-success demo-btn-modal"><i class="fas fa-sign-in-alt"></i> Ir al Login</button>
-                <a href="https://presentacionispcfood.netlify.app/" target="_blank" class="btn btn-secondary demo-btn-modal" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-presentation"></i> Presentación del producto</a>
+                <a href="https://presentacionispcfood.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary demo-btn-modal" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-presentation"></i> Presentación del producto</a>
             </div>
         </div>
     </div>
@@ -785,9 +787,9 @@ class SystemHealthView(APIView):
     }
     </style>
 
-    <script src="config.js"></script>
-    <script src="translator.js"></script>
-    <script src="script.js"></script>
+    <script defer src="config.js"></script>
+    <script defer src="translator.js"></script>
+    <script defer src="script.js"></script>
     <script>
     // Modal Demo
     document.addEventListener('DOMContentLoaded', function() {
@@ -814,3 +816,12 @@ class SystemHealthView(APIView):
         }
         if(demoAndroidBtn && modal && closeModal && goDemo) {
             demoAndroidBtn.onclick = function() { modal.style.display = 'flex'; window.lastDemo = 'android'; };
+        }
+    });
+    </script>
+
+    <script defer src="config.js"></script>
+    <script defer src="translator.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>

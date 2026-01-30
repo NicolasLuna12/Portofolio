@@ -271,7 +271,7 @@ const displayProjects = (repos) => {
                         ${language ? `<span class="language-badge-small">${language}</span>` : ''}
                     </div>
                     <p class="subproject-description">${customDescription}</p>
-                    <a href="${repo.html_url}" target="_blank" class="subproject-link">
+                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="subproject-link">
                         <i class="fab fa-github"></i> Ver código
                     </a>
                 </div>
@@ -335,7 +335,7 @@ const displayProjects = (repos) => {
                         <span class="language-badge-small">${component.language}</span>
                     </div>
                     <p class="subproject-description">${component.description}</p>
-                    <a href="${component.url}" target="_blank" class="subproject-link">
+                    <a href="${component.url}" target="_blank" rel="noopener noreferrer" class="subproject-link">
                         <i class="fab fa-github"></i> Ver código
                     </a>
                 </div>
@@ -406,12 +406,12 @@ const displayProjects = (repos) => {
                     ${techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                 </div>
                 <div class="project-links">
-                    <a href="${repo.html_url}" target="_blank" class="project-link">
+                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i>
                         Código
                     </a>
                     ${repo.homepage ? `
-                        <a href="${repo.homepage}" target="_blank" class="project-link">
+                        <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Demo
                         </a>
@@ -428,7 +428,7 @@ const displayProjectsError = () => {
     projectsGrid.innerHTML = `
         <div class="loading">
             <i class="fas fa-exclamation-circle"></i>
-            <p>No se pudieron cargar los proyectos. <a href="https://github.com/NicolasLuna12" target="_blank">Ver en GitHub</a></p>
+            <p>No se pudieron cargar los proyectos. <a href="https://github.com/NicolasLuna12" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></p>
         </div>
     `;
 };
