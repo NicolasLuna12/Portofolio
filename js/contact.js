@@ -1,4 +1,6 @@
-// DOM Elements
+// Contact Form Module with EmailJS
+
+// DOM Element
 const contactForm = document.getElementById('contact-form');
 
 // Contact Form with EmailJS
@@ -83,9 +85,5 @@ const setupContactForm = () => {
     }
 };
 
-// Initialize contact form when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupContactForm);
-} else {
-    setupContactForm();
-}
+// Export functions
+window.setupContactForm = setupContactForm;

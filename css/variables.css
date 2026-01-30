@@ -1,0 +1,33 @@
+/* Variables CSS */
+:root {
+    --primary-color: #0070f3;
+    --secondary-color: #1a1a1a;
+    --accent-color: #00d9ff;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-dark: #1a1a1a;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #2a2a2a;
+    --border-color: #333;
+    --success-color: #00ff88;
+    --warning-color: #ffaa00;
+    --error-color: #ff4444;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 12px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] {
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-dark: #ffffff;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --border-color: #e1e5e9;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.15);
+}
