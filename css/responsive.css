@@ -112,7 +112,7 @@
 
 @media (max-width: 480px) {
     .hero-container {
-        padding: 0 1.5rem 0 0.5rem;
+        padding: 0 1.5rem 0 0.8rem;
     }
     
     .hero-content {
@@ -120,6 +120,10 @@
         text-align: left;
         margin: 0;
         max-width: 100%;
+    }
+    
+    .hero-buttons {
+        padding-left: 0.3rem;
     }
     
     .hero-title {
