@@ -1,30 +1,3 @@
-// Prohibir el uso de consola en toda la página
-window.console = {
-    log: function() {},
-    warn: function() {},
-    error: function() {},
-    info: function() {},
-    debug: function() {},
-    trace: function() {},
-    dir: function() {},
-    dirxml: function() {},
-    group: function() {},
-    groupCollapsed: function() {},
-    groupEnd: function() {},
-    time: function() {},
-    timeEnd: function() {},
-    timeLog: function() {},
-    assert: function() {},
-    clear: function() {},
-    count: function() {},
-    countReset: function() {},
-    table: function() {},
-    profile: function() {},
-    profileEnd: function() {},
-    timeStamp: function() {},
-    context: function() {}
-};
-
 // Constants
 const ANIMATION_DURATION = 2000;
 const FRAME_DURATION = 16;
@@ -153,24 +126,6 @@ const animateCounters = () => {
         
         observer.observe(counter);
     });
-};
-
-// Skill Bars Animation
-const animateSkillBars = () => {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target;
-                const width = progressBar.getAttribute('data-width');
-                progressBar.style.width = width + '%';
-                observer.unobserve(entry.target);
-            }
-        });
-    });
-    
-    skillBars.forEach(bar => observer.observe(bar));
 };
 
 // GitHub Projects Integration
@@ -877,7 +832,6 @@ const init = () => {
     
     // Animations
     animateCounters();
-    animateSkillBars();
     observeElements();
     
     // Certificates Carousel

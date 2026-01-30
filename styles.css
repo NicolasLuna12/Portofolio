@@ -51,7 +51,7 @@ body {
 }
 
 .container {
-    max-width: 1600px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -76,7 +76,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 1rem 2rem;
 }
@@ -225,7 +225,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
@@ -273,6 +273,8 @@ body {
     justify-content: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
+    min-height: 56px;
+    min-width: 180px;
     border-radius: var(--border-radius);
     text-decoration: none;
     font-weight: 600;
@@ -708,29 +710,30 @@ section {
     color: var(--primary-color);
 }
 
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
 .skill-item {
-    margin-bottom: 1.5rem;
-}
-
-.skill-name {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.skill-bar {
-    height: 8px;
     background: var(--bg-tertiary);
-    border-radius: 4px;
-    overflow: hidden;
+    color: var(--text-primary);
+    padding: 0.65rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    cursor: default;
 }
 
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    width: 0;
-    transition: width 2s ease-out;
-    border-radius: 4px;
+.skill-item:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 112, 243, 0.3);
 }
 
 /* Certificates Section */
@@ -742,7 +745,7 @@ section {
 
 .certificates-carousel {
     position: relative;
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 4rem;
 }
@@ -1003,7 +1006,7 @@ section {
 .modal-content {
     position: relative;
     width: 90%;
-    max-width: 1200px;
+    max-width: 1500px;
     height: 90vh;
     background: var(--bg-secondary);
     border-radius: var(--border-radius);
