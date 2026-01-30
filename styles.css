@@ -237,6 +237,7 @@ body {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
+    white-space: nowrap;
 }
 
 .highlight {
@@ -269,6 +270,7 @@ body {
 .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
     border-radius: var(--border-radius);
@@ -319,22 +321,18 @@ body {
     background: linear-gradient(135deg, #34a853, #a8e063);
     color: #fff;
     box-shadow: var(--shadow);
-    border: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: var(--transition);
-    cursor: pointer;
 }
+
 .btn-android:hover {
     background: linear-gradient(135deg, #218838, #6fdc6f);
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
+}
+
+.android-icon {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
 }
 
 .hero-social {
@@ -527,6 +525,123 @@ section {
 .terminal-btn.red { background: #ff5f56; }
 .terminal-btn.yellow { background: #ffbd2e; }
 .terminal-btn.green { background: #27ca3f; }
+
+/* Experience Section */
+.experience {
+    padding: 6rem 2rem;
+    background: var(--bg-secondary);
+}
+
+.experience-timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding: 2rem 0;
+}
+
+.experience-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 3rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 11px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 3px solid var(--bg-secondary);
+    box-shadow: 0 0 0 4px var(--primary-color);
+}
+
+.timeline-content {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.timeline-content:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-color);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.timeline-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.timeline-company {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.timeline-company i {
+    color: var(--primary-color);
+}
+
+.timeline-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-period i {
+    color: var(--primary-color);
+}
+
+.timeline-description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.timeline-tag {
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid var(--primary-color);
+}
+
 
 .terminal-title {
     color: #a0a0a0;
@@ -1053,6 +1168,137 @@ section {
     justify-content: center;
     gap: 1.5rem;
     flex-wrap: wrap;
+}
+
+/* Tarjeta principal de proyecto expandida */
+.project-card-main {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(0, 112, 243, 0.05), rgba(0, 217, 255, 0.05));
+    border: 2px solid var(--primary-color);
+}
+
+.project-card-main .project-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.project-card-main .project-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Contenedor de subproyectos */
+.subprojects-container {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.subprojects-title {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.subprojects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Subtarjetas de componentes */
+.subproject-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.2rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+.subproject-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    opacity: 0.7;
+}
+
+.subproject-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 112, 243, 0.2);
+    border-color: var(--primary-color);
+}
+
+.subproject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.subproject-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.language-badge-small {
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid var(--primary-color);
+}
+
+.subproject-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.subproject-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: var(--transition);
+}
+
+.subproject-link:hover {
+    color: var(--accent-color);
+    gap: 0.6rem;
+}
+
+.demo-trigger {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--primary-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.demo-trigger:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Contact Section */

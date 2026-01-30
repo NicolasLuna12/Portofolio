@@ -51,11 +51,11 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span data-es="Hola, soy" data-en="Hi, I'm">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
+                    <span data-es="Hola, soy Nicolas Luna" data-en="Hi, I'm Nicolas Luna">Hola, soy <span class="highlight">Nicolas Luna</span></span>
                 </h1>
                 <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Digitales" data-en="Senior Web & Digital App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Digitales</h2>
-                <p class="hero-description" data-es="Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and digital app development. Focused on robust solutions and clean code.">
-                    Técnico especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
+                <p class="hero-description" data-es="Especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio." data-en="Technical specialist in backend development with Python/Django and legacy COBOL systems. Experience in scalable web architectures, RESTful APIs, relational databases and digital app development. Focused on robust solutions and clean code.">
+                    Especializado en desarrollo backend con Python/Django y sistemas legacy COBOL. 
                     Experiencia en arquitecturas web escalables, APIs RESTful, bases de datos relacionales 
                     y desarrollo de aplicaciones digitales. Enfocado en soluciones robustas y código limpio.
                 </p>
@@ -63,7 +63,7 @@
                     <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects">Ver Proyectos</a>
                     <a href="#contact" class="btn btn-outline" data-es="Contactarme" data-en="Contact Me">Contactarme</a>
                     <button id="demo-btn" class="btn btn-secondary" type="button"><i class="fas fa-laptop"></i> Ver demo web</button>
-                    <button id="demo-android-btn" class="btn btn-android" type="button" style="margin-left:8px;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png" alt="Android" style="width:22px;vertical-align:middle;margin-right:6px;"> Ver demo Android</button>
+                    <button id="demo-android-btn" class="btn btn-android" type="button"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png" alt="Android" class="android-icon"> Ver demo Android</button>
                 </div>
                 <div class="hero-social">
                     <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
@@ -117,18 +117,19 @@ class SystemHealthView(APIView):
             <div class="about-content">
                 <div class="about-text">
                     <p data-translate="about_description_1">
-                        Con 3+ años de experiencia en desarrollo de sistemas backend robustos y escalables. 
-                        Especializado en Python/Django para aplicaciones web modernas y COBOL para 
-                        mantenimiento de sistemas legacy empresariales.
+                        Apasionado por resolver problemas complejos a través de la tecnología. Mi experiencia 
+                        abarca desde el desarrollo de sistemas modernos hasta la modernización y mantenimiento 
+                        de aplicaciones críticas de negocio, trabajando tanto en startups como en entornos corporativos.
                     </p>
                     <p data-translate="about_description_2">
-                        Mi formación técnica incluye diseño de APIs RESTful, optimización de bases de datos SQL/NoSQL, 
-                        desarrollo de aplicaciones digitales y despliegues en cloud (AWS/Google Cloud). Comprometido con 
-                        las mejores prácticas: código limpio, testing automatizado y documentación técnica profesional.
+                        Me impulsa crear soluciones que generen impacto real. He liderado el desarrollo de sistemas 
+                        completos de e-commerce, aplicaciones móviles nativas y arquitecturas de microservicios escalables. 
+                        Creo en el aprendizaje continuo, la colaboración en equipo y en compartir conocimiento con la 
+                        comunidad de desarrolladores.
                     </p>
                     <div class="about-stats">
                         <div class="stat">
-                            <span class="stat-number" data-target="10">0</span>
+                            <span class="stat-number" data-target="5">0</span>
                             <span class="stat-label" data-translate="about_projects_stat">Proyectos</span>
                         </div>
                         <div class="stat">
@@ -169,6 +170,74 @@ class SystemHealthView(APIView):
                             <p><span class="prompt">$</span> echo $MISSION</p>
                             <p class="output">Building scalable web & mobile solutions</p>
                             <span class="cursor">|</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experiencia Profesional</h2>
+                <p class="section-subtitle">Mi trayectoria en desarrollo de software</p>
+            </div>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">Desarrollador Full Stack Independiente</h3>
+                            <span class="timeline-company">
+                                <i class="fas fa-laptop-code"></i>
+                                Freelance
+                            </span>
+                        </div>
+                        <span class="timeline-period">
+                            <i class="far fa-calendar"></i>
+                            2024 - Presente
+                        </span>
+                        <p class="timeline-description">
+                            Desarrollo de soluciones personalizadas para clientes, incluyendo sistemas web completos, 
+                            aplicaciones móviles y arquitecturas de microservicios. Especializado en Python/Django, 
+                            React y desarrollo Android con Kotlin.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Django</span>
+                            <span class="timeline-tag">React</span>
+                            <span class="timeline-tag">Kotlin</span>
+                            <span class="timeline-tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">Pasante en Desarrollo de Software</h3>
+                            <span class="timeline-company">
+                                <i class="fas fa-building"></i>
+                                Fabricarg
+                            </span>
+                        </div>
+                        <span class="timeline-period">
+                            <i class="far fa-calendar"></i>
+                            2024
+                        </span>
+                        <p class="timeline-description">
+                            Participación en el desarrollo y mantenimiento de sistemas empresariales. 
+                            Trabajo con tecnologías modernas y sistemas legacy, colaborando en la 
+                            modernización de aplicaciones críticas de negocio.
+                        </p>
+                        <div class="timeline-tags">
+                            <span class="timeline-tag">COBOL</span>
+                            <span class="timeline-tag">Python</span>
+                            <span class="timeline-tag">Sistemas Legacy</span>
+                            <span class="timeline-tag">Desarrollo Backend</span>
                         </div>
                     </div>
                 </div>
@@ -607,12 +676,6 @@ class SystemHealthView(APIView):
                     <p>Cargando proyectos desde GitHub...</p>
                 </div>
             </div>
-            <div class="projects-footer">
-                <a href="https://github.com/NicolasLuna12" target="_blank" class="btn btn-primary">
-                    <i class="fab fa-github"></i>
-                    Ver más en GitHub
-                </a>
-            </div>
         </div>
     </section>
 
@@ -626,10 +689,6 @@ class SystemHealthView(APIView):
             <div class="contact-content">
                 <div class="contact-info">
                     <h3 data-translate="contact_info_title">Información de Contacto</h3>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>nicolasluna.ca@gmail.com</span>
-                    </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <span data-translate="contact_location">Córdoba, Argentina</span>
@@ -816,12 +875,12 @@ class SystemHealthView(APIView):
         var modal = document.getElementById('demo-modal');
         var closeModal = document.getElementById('close-demo-modal');
         var goDemo = document.getElementById('go-demo-login');
-        var lastDemo = null;
+        window.lastDemo = null;
         if(demoBtn && modal && closeModal && goDemo) {
-            demoBtn.onclick = function() { modal.style.display = 'flex'; lastDemo = 'web'; };
+            demoBtn.onclick = function() { modal.style.display = 'flex'; window.lastDemo = 'web'; };
             closeModal.onclick = function() { modal.style.display = 'none'; };
             goDemo.onclick = function() {
-                if(lastDemo === 'android') {
+                if(window.lastDemo === 'android') {
                     window.open('https://appetize.io/app/b_zzjugodwwxe26uawgbpk4yiqhi', '_blank');
                 } else {
                     window.open('https://ispcfood.netlify.app/login', '_blank');
@@ -833,11 +892,4 @@ class SystemHealthView(APIView):
             };
         }
         if(demoAndroidBtn && modal && closeModal && goDemo) {
-            demoAndroidBtn.onclick = function() { modal.style.display = 'flex'; lastDemo = 'android'; };
-        }
-    });
-    </script>
-</body>
-</html>
-
-
+            demoAndroidBtn.onclick = function() { modal.style.display = 'flex'; window.lastDemo = 'android'; };
