@@ -41,20 +41,6 @@ const navMenu = document.querySelector('.nav-menu');
 const projectsGrid = document.getElementById('projects-grid');
 const contactForm = document.getElementById('contact-form');
 
-// Christmas Tree Management
-const manageChristmasTree = () => {
-    const christmasTree = document.getElementById('christmas-tree');
-    if (!christmasTree) return;
-    
-    const today = new Date();
-    const january1st = new Date(today.getFullYear(), 0, 1); // 0 = enero, 1 = día 1
-    
-    // Ocultar el arbolito el 1 de enero o después
-    if (today >= january1st && today.getMonth() === 0 && today.getDate() === 1) {
-        christmasTree.style.display = 'none';
-    }
-};
-
 // Theme Management
 const initTheme = () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -720,9 +706,6 @@ const initCertificatesCarousel = () => {
 
 // Initialize Everything
 const init = () => {
-    // Christmas Tree
-    manageChristmasTree();
-    
     // Theme
     initTheme();
     themeToggle?.addEventListener('click', toggleTheme);
