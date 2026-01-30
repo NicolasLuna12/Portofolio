@@ -96,7 +96,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 112, 243, 0.2);
 }
 
-.nav-logo > span:first-of-type {
+.nav-logo span {
     font-size: 1.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
@@ -106,15 +106,15 @@ body {
 }
 
 .christmas-tree {
-    font-size: 2.0rem;
+    font-size: 1.3rem;
     animation: twinkle 2s ease-in-out infinite;
     margin-left: 0.3rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.christmas-tree:hover {
-    transform: scale(1.2) rotate(10deg);
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    color: inherit !important;
+    filter: none !important;
 }
 
 @keyframes twinkle {
