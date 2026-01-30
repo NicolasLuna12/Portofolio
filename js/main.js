@@ -19,8 +19,8 @@ const init = () => {
     }
     
     // Navigation
-    if (hamburger && typeof toggleMobileMenu === 'function') {
-        hamburger.addEventListener('click', toggleMobileMenu);
+    if (typeof initMobileMenu === 'function') {
+        initMobileMenu();
     }
     if (typeof setupSmoothScrolling === 'function') {
         setupSmoothScrolling();

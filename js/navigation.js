@@ -4,8 +4,25 @@ const navMenu = document.querySelector('.nav-menu');
 
 // Mobile Navigation
 const toggleMobileMenu = () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+    if (navMenu.classList.contains('active')) {
+        // Closing animation
+        navMenu.classList.add('closing');
+        setTimeout(() => {
+            navMenu.classList.remove('active', 'closing');
+            hamburger.classList.remove('active');
+        }, 300);
+    } else {
+        // Opening
+        navMenu.classList.add('active');
+        hamburger.classList.add('active');
+    }
+};
+
+// Initialize hamburger menu
+const initMobileMenu = () => {
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMobileMenu);
+    }
 };
 
 // Smooth Scrolling for Navigation Links
@@ -66,3 +83,4 @@ const updateActiveNavLink = () => {
 window.setupSmoothScrolling = setupSmoothScrolling;
 window.updateActiveNavLink = updateActiveNavLink;
 window.toggleMobileMenu = toggleMobileMenu;
+window.initMobileMenu = initMobileMenu;

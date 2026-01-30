@@ -130,12 +130,38 @@
     display: none;
     flex-direction: column;
     cursor: pointer;
-    gap: 4px;
+    gap: 5px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburger:hover {
+    background: rgba(0, 112, 243, 0.1);
 }
 
 .hamburger span {
-    width: 25px;
+    width: 28px;
     height: 3px;
-    background: var(--text-primary);
-    transition: var(--transition);
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
