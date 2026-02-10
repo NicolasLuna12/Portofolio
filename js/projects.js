@@ -4,7 +4,7 @@ const GITHUB_USERNAME = 'NicolasLuna12';
 const REPOS_PER_PAGE = 100;
 const ISPC_FOOD_REPOS = ['backmobile1', 'frontprod', 'back2fa', 'backmp', 'Android-Tesis-2025'];
 const PROJECT_I_DO_REPO = 'Proyectido';
-const EXCLUDED_REPOS = ['nicolasluna12', 'NicolasLuna12', 'Portofolio', 'portofolio'];
+const EXCLUDED_REPOS = ['nicolasluna12', 'NicolasLuna12', 'Portofolio', 'portofolio', 'Invitacion', 'invitacion'];
 const STAR_WEIGHT = 1000000;
 
 // DOM Elements
