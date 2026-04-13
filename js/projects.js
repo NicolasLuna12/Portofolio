@@ -6,34 +6,103 @@ const ISPC_FOOD_REPOS = ['backmobile1', 'frontprod', 'back2fa', 'backmp', 'Andro
 const PROJECT_I_DO_REPO = 'Proyectido';
 const EXCLUDED_REPOS = ['nicolasluna12', 'NicolasLuna12', 'Portofolio', 'portofolio', 'Invitacion', 'invitacion', 'NicolasLuna12.github.io'];
 const STAR_WEIGHT = 1000000;
+let cachedRepos = [];
+let hadProjectsError = false;
 
 // DOM Elements
 const projectsGrid = document.getElementById('projects-grid');
 
+const PROJECT_TEXT = {
+    es: {
+        systemComponent: 'Componente del sistema',
+        viewCode: 'Ver codigo',
+        code: 'Codigo',
+        demo: 'Demo',
+        fullStack: 'Full Stack',
+        systemComponents: 'Componentes del Sistema',
+        ispcFoodTitle: 'Sistema ISPC Food',
+        ispcFoodDescription: 'Sistema completo de gestion de alimentos con arquitectura de microservicios. Incluye backend Django, frontend Angular, app movil Android y servicios especializados para autenticacion 2FA y procesamiento de pagos con MercadoPago.',
+        projectIDoTitle: 'Project I Do',
+        projectIDoDescription: 'Sistema completo de gestion de tareas y proyectos con arquitectura moderna. Aplicacion web full stack con backend robusto, frontend responsive y aplicacion movil nativa en Kotlin para gestion de productividad en cualquier dispositivo.',
+        defaultProjectDescription: 'Proyecto de desarrollo',
+        loadingError: 'No se pudieron cargar los proyectos.',
+        viewOnGithub: 'Ver en GitHub',
+        fallbackTech: 'Backend'
+    },
+    en: {
+        systemComponent: 'System component',
+        viewCode: 'View code',
+        code: 'Code',
+        demo: 'Demo',
+        fullStack: 'Full Stack',
+        systemComponents: 'System Components',
+        ispcFoodTitle: 'ISPC Food System',
+        ispcFoodDescription: 'Comprehensive food management system built with microservices architecture. Includes Django backend, Angular frontend, Android mobile app, and specialized services for 2FA authentication and MercadoPago payment processing.',
+        projectIDoTitle: 'Project I Do',
+        projectIDoDescription: 'End-to-end task and project management system with a modern architecture. Full stack web app with robust backend, responsive frontend, and native Kotlin mobile app for productivity on any device.',
+        defaultProjectDescription: 'Development project',
+        loadingError: 'Projects could not be loaded.',
+        viewOnGithub: 'View on GitHub',
+        fallbackTech: 'Backend'
+    }
+};
+
+const getCurrentLanguage = () => localStorage.getItem('lang') === 'en' ? 'en' : 'es';
+
 const PROJECT_CONFIG = {
     'backmobile1': {
-        displayName: 'Backend Principal',
-        description: 'API REST con Django - Gestión completa del sistema',
+        displayName: {
+            es: 'Backend Principal',
+            en: 'Core Backend'
+        },
+        description: {
+            es: 'API REST con Django - Gestion completa del sistema',
+            en: 'Django REST API - Complete system management'
+        },
         language: 'Python'
     },
     'frontprod': {
-        displayName: 'Frontend Web',
-        description: 'Interfaz de usuario con Angular - Panel administrativo',
+        displayName: {
+            es: 'Frontend Web',
+            en: 'Web Frontend'
+        },
+        description: {
+            es: 'Interfaz de usuario con Angular - Panel administrativo',
+            en: 'Angular user interface - Admin dashboard'
+        },
         language: 'TypeScript'
     },
     'back2fa': {
-        displayName: 'Microservicio 2FA',
-        description: 'Autenticación de dos factores - Seguridad avanzada',
+        displayName: {
+            es: 'Microservicio 2FA',
+            en: '2FA Microservice'
+        },
+        description: {
+            es: 'Autenticacion de dos factores - Seguridad avanzada',
+            en: 'Two-factor authentication - Advanced security'
+        },
         language: 'Python'
     },
     'backmp': {
-        displayName: 'Microservicio Pagos',
-        description: 'Integración MercadoPago - Procesamiento de pagos',
+        displayName: {
+            es: 'Microservicio Pagos',
+            en: 'Payments Microservice'
+        },
+        description: {
+            es: 'Integracion MercadoPago - Procesamiento de pagos',
+            en: 'MercadoPago integration - Payment processing'
+        },
         language: 'Python'
     },
     'Android-Tesis-2025': {
-        displayName: 'App Android',
-        description: 'Aplicación móvil nativa - Gestión de pedidos',
+        displayName: {
+            es: 'App Android',
+            en: 'Android App'
+        },
+        description: {
+            es: 'Aplicacion movil nativa - Gestion de pedidos',
+            en: 'Native mobile app - Order management'
+        },
         language: 'Java'
     },
     'project-i-do-backend': {
@@ -77,17 +146,25 @@ const loadGitHubProjects = async () => {
         }
         
         if (allRepos.length > 0) {
+            cachedRepos = allRepos;
+            hadProjectsError = false;
             displayProjects(allRepos);
         } else {
+            cachedRepos = [];
+            hadProjectsError = true;
             displayProjectsError();
         }
     } catch (error) {
+        cachedRepos = [];
+        hadProjectsError = true;
         displayProjectsError();
     }
 };
 
 const displayProjects = (repos) => {
     const projectsGrid = document.getElementById('projects-grid');
+    const lang = getCurrentLanguage();
+    const t = PROJECT_TEXT[lang];
     
     const filteredRepos = repos.filter(repo => 
         !repo.fork && 
@@ -105,7 +182,7 @@ const displayProjects = (repos) => {
         if (!repo && repoName === 'Android-Tesis-2025') {
             repo = {
                 name: 'Android-Tesis-2025',
-                description: 'Aplicación Android - Sistema de gestión de alimentos',
+                description: lang === 'en' ? 'Android app - Food management system' : 'Aplicacion Android - Sistema de gestion de alimentos',
                 html_url: 'https://github.com/NicolasLuna12/Android-Tesis-2025',
                 language: 'Java',
                 stargazers_count: 0,
@@ -140,8 +217,8 @@ const displayProjects = (repos) => {
     if (ispcFoodRepos.length > 0) {
         const subprojectsHTML = ispcFoodRepos.map(repo => {
             const config = PROJECT_CONFIG[repo.name];
-            const displayName = config?.displayName || repo.name;
-            const customDescription = config?.description || repo.description || 'Componente del sistema';
+            const displayName = config?.displayName?.[lang] || config?.displayName || repo.name;
+            const customDescription = config?.description?.[lang] || config?.description || repo.description || t.systemComponent;
             const language = config?.language || repo.language;
             
             return `
@@ -152,7 +229,7 @@ const displayProjects = (repos) => {
                     </div>
                     <p class="subproject-description">${customDescription}</p>
                     <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="subproject-link">
-                        <i class="fab fa-github"></i> Ver código
+                        <i class="fab fa-github"></i> ${t.viewCode}
                     </a>
                 </div>
             `;
@@ -163,17 +240,15 @@ const displayProjects = (repos) => {
                 <div class="project-header">
                     <div>
                         <h3 class="project-title">
-                            <i class="fas fa-utensils"></i> Sistema ISPC Food
+                            <i class="fas fa-utensils"></i> ${t.ispcFoodTitle}
                         </h3>
                     </div>
                     <div class="project-language">
-                        <span class="language-badge">Full Stack</span>
+                        <span class="language-badge">${t.fullStack}</span>
                     </div>
                 </div>
                 <p class="project-description">
-                    Sistema completo de gestión de alimentos con arquitectura de microservicios. 
-                    Incluye backend Django, frontend Angular, app móvil Android y servicios especializados 
-                    para autenticación 2FA y procesamiento de pagos con MercadoPago.
+                    ${t.ispcFoodDescription}
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Django</span>
@@ -186,7 +261,7 @@ const displayProjects = (repos) => {
                 </div>
                 <div class="subprojects-container">
                     <h4 class="subprojects-title">
-                        <i class="fas fa-layer-group"></i> Componentes del Sistema
+                        <i class="fas fa-layer-group"></i> ${t.systemComponents}
                     </h4>
                     <div class="subprojects-grid">
                         ${subprojectsHTML}
@@ -200,8 +275,8 @@ const displayProjects = (repos) => {
     if (projectIDoRepo) {
         const projectIDoComponents = [
             {
-                title: 'App Móvil',
-                description: 'Aplicación nativa Android en Kotlin - Gestión móvil',
+                title: lang === 'en' ? 'Mobile App' : 'App Movil',
+                description: lang === 'en' ? 'Native Android app in Kotlin - Mobile management' : 'Aplicacion nativa Android en Kotlin - Gestion movil',
                 language: 'Kotlin',
                 url: projectIDoRepo.html_url
             }
@@ -216,7 +291,7 @@ const displayProjects = (repos) => {
                     </div>
                     <p class="subproject-description">${component.description}</p>
                     <a href="${component.url}" target="_blank" rel="noopener noreferrer" class="subproject-link">
-                        <i class="fab fa-github"></i> Ver código
+                        <i class="fab fa-github"></i> ${t.viewCode}
                     </a>
                 </div>
             `;
@@ -231,13 +306,11 @@ const displayProjects = (repos) => {
                         </h3>
                     </div>
                     <div class="project-language">
-                        <span class="language-badge">Full Stack</span>
+                        <span class="language-badge">${t.fullStack}</span>
                     </div>
                 </div>
                 <p class="project-description">
-                    Sistema completo de gestión de tareas y proyectos con arquitectura moderna. 
-                    Aplicación web full stack con backend robusto, frontend responsive y 
-                    aplicación móvil nativa en Kotlin para gestión de productividad en cualquier dispositivo.
+                    ${t.projectIDoDescription}
                 </p>
                 <div class="project-tech">
                     <span class="tech-tag">Python</span>
@@ -250,7 +323,7 @@ const displayProjects = (repos) => {
                 </div>
                 <div class="subprojects-container">
                     <h4 class="subprojects-title">
-                        <i class="fas fa-layer-group"></i> Componentes del Sistema
+                        <i class="fas fa-layer-group"></i> ${t.systemComponents}
                     </h4>
                     <div class="subprojects-grid">
                         ${subprojectsHTML}
@@ -264,7 +337,7 @@ const displayProjects = (repos) => {
     projectsHTML += otherRepos.map(repo => {
         const techStack = getTechStack(repo.name, repo.description || '');
         const displayName = repo.name;
-        const customDescription = repo.description || 'Proyecto de desarrollo';
+        const customDescription = repo.description || t.defaultProjectDescription;
         
         return `
             <div class="project-card fade-in">
@@ -288,12 +361,12 @@ const displayProjects = (repos) => {
                 <div class="project-links">
                     <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i>
-                        Código
+                        ${t.code}
                     </a>
                     ${repo.homepage ? `
                         <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
-                            Demo
+                            ${t.demo}
                         </a>
                     ` : ''}
                 </div>
@@ -306,11 +379,13 @@ const displayProjects = (repos) => {
 
 const displayProjectsError = () => {
     const projectsGrid = document.getElementById('projects-grid');
+    const lang = getCurrentLanguage();
+    const t = PROJECT_TEXT[lang];
     
     projectsGrid.innerHTML = `
         <div class="loading">
             <i class="fas fa-exclamation-circle"></i>
-            <p>No se pudieron cargar los proyectos. <a href="https://github.com/NicolasLuna12" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></p>
+            <p>${t.loadingError} <a href="https://github.com/NicolasLuna12" target="_blank" rel="noopener noreferrer">${t.viewOnGithub}</a></p>
         </div>
     `;
 };
@@ -327,7 +402,7 @@ const getProjectLanguages = (language) => {
         'PHP': ['PHP']
     };
     
-    return languageMap[language] || [language || 'Backend'];
+    return languageMap[language] || [language || PROJECT_TEXT[getCurrentLanguage()].fallbackTech];
 };
 
 const getTechStack = (name, description) => {
@@ -362,8 +437,19 @@ const getTechStack = (name, description) => {
     if (nameAndDesc.includes('vue')) techStack.push('Vue.js');
     if (nameAndDesc.includes('angular')) techStack.push('Angular');
     
-    return techStack.length > 0 ? techStack : ['Backend'];
+    return techStack.length > 0 ? techStack : [PROJECT_TEXT[getCurrentLanguage()].fallbackTech];
 };
+
+document.addEventListener('languageChanged', () => {
+    if (cachedRepos.length > 0) {
+        displayProjects(cachedRepos);
+        return;
+    }
+
+    if (hadProjectsError) {
+        displayProjectsError();
+    }
+});
 
 // Export functions
 window.loadGitHubProjects = loadGitHubProjects;

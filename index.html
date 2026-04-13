@@ -202,15 +202,15 @@ class SystemHealthView(APIView):
     <section id="experience" class="experience">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Experiencia Profesional</h2>
-                <p class="section-subtitle">Mi trayectoria en desarrollo de software</p>
+                <h2 class="section-title" data-translate="experience_title">Experiencia Profesional</h2>
+                <p class="section-subtitle" data-translate="experience_subtitle">Mi trayectoria en desarrollo de software</p>
             </div>
             <div class="experience-timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3 class="timeline-title">Pasante en Desarrollo de Software</h3>
+                            <h3 class="timeline-title" data-translate="experience_role_intern">Pasante en Desarrollo de Software</h3>
                             <span class="timeline-company">
                                 <i class="fas fa-building"></i>
                                 Fabricarg
@@ -220,11 +220,7 @@ class SystemHealthView(APIView):
                             <i class="far fa-calendar"></i>
                             2024
                         </span>
-                        <p class="timeline-description">
-                            Desarrollo de aplicaciones web empresariales utilizando .NET y Blazor. Implementación 
-                            de funcionalidades CRUD, gestión de bases de datos SQL Server y creación de interfaces 
-                            interactivas. Colaboración en equipos ágiles y participación en el ciclo completo de desarrollo.
-                        </p>
+                        <p class="timeline-description" data-translate="experience_desc_intern">Desarrollo de aplicaciones web empresariales utilizando .NET y Blazor. Implementación de funcionalidades CRUD, gestión de bases de datos SQL Server y creación de interfaces interactivas. Colaboración en equipos ágiles y participación en el ciclo completo de desarrollo.</p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">C#</span>
                             <span class="timeline-tag">.NET</span>
@@ -238,21 +234,17 @@ class SystemHealthView(APIView):
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3 class="timeline-title">Desarrollador Full Stack Independiente</h3>
+                            <h3 class="timeline-title" data-translate="experience_role_freelance">Desarrollador Full Stack Independiente</h3>
                             <span class="timeline-company">
                                 <i class="fas fa-laptop-code"></i>
-                                Freelance
+                                <span data-translate="experience_company_freelance">Freelance</span>
                             </span>
                         </div>
                         <span class="timeline-period">
                             <i class="far fa-calendar"></i>
-                            2024 - Presente
+                            <span data-translate="experience_period_current">2024 - Presente</span>
                         </span>
-                        <p class="timeline-description">
-                            Desarrollo de soluciones personalizadas para clientes, incluyendo sistemas web completos, 
-                            aplicaciones móviles y arquitecturas de microservicios. Especializado en Python/Django, 
-                            React y desarrollo Android con Kotlin.
-                        </p>
+                        <p class="timeline-description" data-translate="experience_desc_freelance">Desarrollo de soluciones personalizadas para clientes, incluyendo sistemas web completos, aplicaciones móviles y arquitecturas de microservicios. Especializado en Python/Django, React y desarrollo Android con Kotlin.</p>
                         <div class="timeline-tags">
                             <span class="timeline-tag">Python</span>
                             <span class="timeline-tag">Django</span>
@@ -600,7 +592,7 @@ class SystemHealthView(APIView):
                 <!-- Los proyectos se cargarán dinámicamente desde GitHub -->
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin"></i>
-                    <p>Cargando proyectos desde GitHub...</p>
+                    <p data-translate="projects_loading">Cargando proyectos desde GitHub...</p>
                 </div>
             </div>
         </div>
@@ -634,7 +626,7 @@ class SystemHealthView(APIView):
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-file-pdf"></i>
-                        <a href="cv-nicolas-luna.pdf" target="_blank" download="CV-Nicolas-Luna.pdf">Descargar CV</a>
+                        <a href="cv-nicolas-luna.pdf" target="_blank" download="CV-Nicolas-Luna.pdf" data-translate="contact_download_cv">Descargar CV</a>
                     </div>
                 </div>
                 <form class="contact-form" id="contact-form">
@@ -791,9 +783,6 @@ class SystemHealthView(APIView):
     }
     </style>
 
-    <script defer src="config.js"></script>
-    <script defer src="translator.js"></script>
-    <script defer src="script.js"></script>
     <script>
     // Modal Demo
     document.addEventListener('DOMContentLoaded', function() {
