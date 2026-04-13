@@ -3,7 +3,10 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    background:
+        radial-gradient(circle at 20% 10%, rgba(0, 112, 243, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 90% 25%, rgba(0, 217, 255, 0.18) 0%, transparent 40%),
+        linear-gradient(125deg, var(--bg-primary) 0%, #101923 55%, var(--bg-secondary) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -17,6 +20,20 @@
     bottom: 0;
     background: radial-gradient(circle at 30% 80%, rgba(0, 112, 243, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 70% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    right: -90px;
+    bottom: -60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0, 112, 243, 0.45), rgba(0, 217, 255, 0.12));
+    filter: blur(8px);
+    animation: driftGlow 7s ease-in-out infinite;
     pointer-events: none;
 }
 
@@ -37,6 +54,31 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
+}
+
+.hero-badge {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(8px);
+    color: var(--text-primary);
+    font-size: 0.86rem;
+    letter-spacing: 0.01em;
+}
+
+.hero-badge-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2bd576;
+    box-shadow: 0 0 0 0 rgba(43, 213, 118, 0.7);
+    animation: pulseDot 2s ease-out infinite;
 }
 
 .highlight {
@@ -61,9 +103,22 @@
 }
 
 .hero-buttons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
+    max-width: 640px;
+}
+
+.hero-buttons .btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 58px;
+}
+
+.hero-buttons .btn i,
+.hero-buttons .android-icon {
+    flex-shrink: 0;
 }
 
 .btn {
@@ -79,14 +134,32 @@
     font-weight: 600;
     transition: var(--transition);
     cursor: pointer;
-    border: none;
+    border: 1px solid transparent;
     font-size: 1rem;
+    overflow: hidden;
+    position: relative;
+    isolation: isolate;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.4) 45%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+    z-index: -1;
+}
+
+.btn:hover::after {
+    transform: translateX(120%);
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, #0c7dff 0%, #12bfff 100%);
     color: white;
-    box-shadow: var(--shadow);
+    border-color: rgba(120, 210, 255, 0.45);
 }
 
 .btn-primary:hover {
@@ -95,33 +168,33 @@
 }
 
 .btn-outline {
-    background: transparent;
+    background: linear-gradient(135deg, rgba(17, 35, 56, 0.86) 0%, rgba(12, 29, 50, 0.72) 100%);
     color: var(--text-primary);
-    border: 2px solid var(--border-color);
+    border: 1px solid rgba(118, 157, 198, 0.35);
 }
 
 .btn-outline:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
+    background: linear-gradient(135deg, #1763b8 0%, #0f87cf 100%);
+    border-color: rgba(123, 202, 255, 0.6);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    background: linear-gradient(135deg, #ff6f5a 0%, #ff9254 100%);
     color: white;
-    box-shadow: var(--shadow);
+    border-color: rgba(255, 197, 156, 0.42);
 }
 
 .btn-secondary:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
-    background: linear-gradient(135deg, #ff5252, #ff7043);
+    background: linear-gradient(135deg, #ff5a49 0%, #ff7a3b 100%);
 }
 
 .btn-android {
-    background: linear-gradient(135deg, #34a853, #a8e063);
+    background: linear-gradient(135deg, #29a94f 0%, #8adf54 100%);
     color: #fff;
-    box-shadow: var(--shadow);
+    border-color: rgba(186, 243, 126, 0.45);
 }
 
 .btn-android:hover {
@@ -154,6 +227,7 @@
     text-decoration: none;
     font-size: 1.2rem;
     transition: var(--transition);
+    backdrop-filter: blur(6px);
 }
 
 .social-link:hover {
@@ -169,6 +243,31 @@
     overflow: hidden;
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
+    transform: perspective(900px) rotateY(-3deg);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.code-window:hover {
+    transform: perspective(900px) rotateY(0deg) translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+@keyframes pulseDot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(43, 213, 118, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 12px rgba(43, 213, 118, 0);
+    }
+}
+
+@keyframes driftGlow {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(-24px, -18px) scale(1.05);
+    }
 }
 
 .code-header {
