@@ -62,7 +62,7 @@ const TRANSLATIONS = {
         nav_contact: 'Contact',
         hero_badge: 'Available for new projects in 2026',
         hero_title_prefix: "Hi, I'm",
-        hero_subtitle: 'Senior Web & Digital App Developer',
+        hero_subtitle: 'Web Development and Digital Applications Technician',
         hero_description: 'Full Stack Developer specialized in Python/Django, .NET and Android mobile development. Experience in legacy COBOL systems, scalable web architectures, RESTful APIs and relational databases. Focused on robust solutions and clean code.',
         hero_btn_projects: 'View Projects',
         hero_btn_contact: 'Contact Me',
