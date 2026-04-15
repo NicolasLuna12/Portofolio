@@ -5,6 +5,67 @@ const FRAME_DURATION = 16;
 const TYPING_SPEED = 150;
 const TYPING_DELAY = 1000;
 
+// Parallax state
+let parallaxTargets = null;
+
+const getParallaxTargets = () => {
+    if (parallaxTargets) return parallaxTargets;
+
+    const hero = document.querySelector('.hero');
+    const sections = Array.from(document.querySelectorAll('section:not(.hero)'));
+
+    if (!hero) {
+        parallaxTargets = { hero: null, content: null, image: null, sections };
+        return parallaxTargets;
+    }
+
+    parallaxTargets = {
+        hero,
+        content: hero.querySelector('.hero-content'),
+        image: hero.querySelector('.hero-image'),
+        sections
+    };
+
+    return parallaxTargets;
+};
+
+const shouldDisableParallax = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileViewport = window.matchMedia('(max-width: 768px)').matches;
+    return reduceMotion || mobileViewport;
+};
+
+const resetParallaxTransforms = () => {
+    const { hero, content, image, sections } = getParallaxTargets();
+
+    if (hero) {
+        hero.style.setProperty('--hero-parallax-y', '0px');
+    }
+
+    if (content) {
+        content.style.transform = '';
+    }
+
+    if (image) {
+        image.style.transform = '';
+    }
+
+    sections.forEach(section => {
+        section.style.setProperty('--section-parallax-y', '0px');
+    });
+};
+
+const setupParallax = () => {
+    getParallaxTargets();
+
+    if (shouldDisableParallax()) {
+        resetParallaxTransforms();
+        return;
+    }
+
+    handleParallax();
+};
+
 // Animated Counters
 const animateCounters = () => {
     const counters = document.querySelectorAll('.stat-number');
@@ -74,12 +135,41 @@ const typeWriter = (element, text, speed = 100) => {
 
 // Parallax Effect
 const handleParallax = () => {
+    const { hero, content, image, sections } = getParallaxTargets();
+
+    if (shouldDisableParallax()) {
+        resetParallaxTransforms();
+        return;
+    }
+
     const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.hero::before');
-    
-    parallaxElements.forEach(element => {
-        const speed = 0.5;
-        element.style.transform = `translateY(${scrolled * speed}px)`;
+
+    if (hero) {
+        const heroTop = hero.offsetTop;
+        const relativeScroll = scrolled - heroTop;
+        const bgShift = relativeScroll * 0.18;
+        const contentShift = relativeScroll * -0.08;
+        const imageShift = relativeScroll * 0.13;
+
+        hero.style.setProperty('--hero-parallax-y', `${bgShift.toFixed(2)}px`);
+
+        if (content) {
+            content.style.transform = `translate3d(0, ${contentShift.toFixed(2)}px, 0)`;
+        }
+
+        if (image) {
+            image.style.transform = `translate3d(0, ${imageShift.toFixed(2)}px, 0)`;
+        }
+    }
+
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const sectionCenter = rect.top + rect.height / 2;
+        const viewportCenter = window.innerHeight / 2;
+        const distanceFromCenter = sectionCenter - viewportCenter;
+        const shift = Math.max(-22, Math.min(22, distanceFromCenter * -0.08));
+
+        section.style.setProperty('--section-parallax-y', `${shift.toFixed(2)}px`);
     });
 };
 
@@ -88,5 +178,6 @@ window.animateCounters = animateCounters;
 window.observeElements = observeElements;
 window.typeWriter = typeWriter;
 window.handleParallax = handleParallax;
+window.setupParallax = setupParallax;
 window.TYPING_SPEED = TYPING_SPEED;
 window.TYPING_DELAY = TYPING_DELAY;

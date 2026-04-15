@@ -79,8 +79,21 @@ const updateActiveNavLink = () => {
     });
 };
 
+// Navbar visual state on scroll
+const updateNavbarState = () => {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    if (window.scrollY > 24) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+};
+
 // Export functions
 window.setupSmoothScrolling = setupSmoothScrolling;
 window.updateActiveNavLink = updateActiveNavLink;
+window.updateNavbarState = updateNavbarState;
 window.toggleMobileMenu = toggleMobileMenu;
 window.initMobileMenu = initMobileMenu;

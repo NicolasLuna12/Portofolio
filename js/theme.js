@@ -17,8 +17,15 @@ const toggleTheme = () => {
 };
 
 const updateThemeIcon = (theme) => {
-    const icon = themeToggle.querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    if (!themeToggle) return;
+
+    themeToggle.setAttribute('data-theme-state', theme);
+
+    if (theme === 'dark') {
+        themeToggle.setAttribute('aria-label', 'Activar modo claro');
+    } else {
+        themeToggle.setAttribute('aria-label', 'Activar modo oscuro');
+    }
 };
 
 // Export functions

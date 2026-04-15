@@ -17,7 +17,7 @@ const TRANSLATIONS = {
         experience_company_freelance: 'Freelance',
         experience_period_current: '2024 - Presente',
         experience_desc_freelance: 'Desarrollo de soluciones personalizadas para clientes, incluyendo sistemas web completos, aplicaciones móviles y arquitecturas de microservicios. Especializado en Python/Django, React y desarrollo Android con Kotlin.',
-        skills_title: 'Stack Tecnológico',
+        skills_title: 'Tecnologías',
         skills_subtitle: 'Tecnologías aprendidas en mi formación técnica superior y experiencia profesional',
         certificates_title: 'Certificaciones',
         certificates_subtitle: 'Certificados profesionales y badges obtenidos en plataformas reconocidas',
@@ -79,7 +79,23 @@ function applyLanguage(lang) {
     document.querySelectorAll('[data-es][data-en]').forEach((element) => {
         const text = element.getAttribute(`data-${currentLang}`);
         if (text) {
-            element.textContent = text;
+            const labelTarget = element.querySelector('[data-i18n-label]');
+
+            if (labelTarget) {
+                labelTarget.textContent = text;
+            } else if (element.children.length > 0) {
+                const textNode = Array.from(element.childNodes).find(
+                    node => node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0
+                );
+
+                if (textNode) {
+                    textNode.textContent = ` ${text}`;
+                } else {
+                    element.appendChild(document.createTextNode(` ${text}`));
+                }
+            } else {
+                element.textContent = text;
+            }
         }
     });
 
@@ -95,7 +111,16 @@ function applyLanguage(lang) {
 
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
-        langBtn.textContent = currentLang === 'es' ? 'ES' : 'EN';
+        const langCode = langBtn.querySelector('.lang-code');
+        if (langCode) {
+            langCode.textContent = currentLang === 'es' ? 'ES' : 'EN';
+        }
+
+        if (currentLang === 'es') {
+            langBtn.setAttribute('aria-label', 'Switch language to English');
+        } else {
+            langBtn.setAttribute('aria-label', 'Cambiar idioma a español');
+        }
     }
 
     document.documentElement.lang = currentLang;

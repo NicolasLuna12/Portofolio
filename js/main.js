@@ -25,10 +25,14 @@ const init = () => {
     if (typeof setupSmoothScrolling === 'function') {
         setupSmoothScrolling();
     }
+    if (typeof updateNavbarState === 'function') {
+        updateNavbarState();
+    }
     
     // Animations
     if (typeof animateCounters === 'function') animateCounters();
     if (typeof observeElements === 'function') observeElements();
+    if (typeof setupParallax === 'function') setupParallax();
     
     // Certificates Carousel
     if (typeof initCertificatesCarousel === 'function') {
@@ -47,11 +51,16 @@ const init = () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 if (typeof updateActiveNavLink === 'function') updateActiveNavLink();
+                if (typeof updateNavbarState === 'function') updateNavbarState();
                 if (typeof handleParallax === 'function') handleParallax();
                 ticking = false;
             });
             ticking = true;
         }
+    });
+
+    window.addEventListener('resize', () => {
+        if (typeof setupParallax === 'function') setupParallax();
     });
     
     // Typing effect for hero subtitle
