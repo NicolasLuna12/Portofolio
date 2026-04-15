@@ -7,6 +7,8 @@ const TYPING_DELAY = 1000;
 
 // Parallax state
 let parallaxTargets = null;
+let parallaxSectionObserver = null;
+const activeParallaxSections = new Set();
 
 const getParallaxTargets = () => {
     if (parallaxTargets) return parallaxTargets;
@@ -35,6 +37,30 @@ const shouldDisableParallax = () => {
     return reduceMotion || mobileViewport;
 };
 
+const setupParallaxSectionObserver = () => {
+    const { sections } = getParallaxTargets();
+
+    if (!sections.length || parallaxSectionObserver) {
+        return;
+    }
+
+    parallaxSectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                activeParallaxSections.add(entry.target);
+            } else {
+                activeParallaxSections.delete(entry.target);
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '20% 0px 20% 0px',
+        threshold: 0
+    });
+
+    sections.forEach(section => parallaxSectionObserver.observe(section));
+};
+
 const resetParallaxTransforms = () => {
     const { hero, content, image, sections } = getParallaxTargets();
 
@@ -57,6 +83,7 @@ const resetParallaxTransforms = () => {
 
 const setupParallax = () => {
     getParallaxTargets();
+    setupParallaxSectionObserver();
 
     if (shouldDisableParallax()) {
         resetParallaxTransforms();
@@ -162,7 +189,11 @@ const handleParallax = () => {
         }
     }
 
-    sections.forEach(section => {
+    const targetSections = activeParallaxSections.size > 0
+        ? Array.from(activeParallaxSections)
+        : sections;
+
+    targetSections.forEach(section => {
         const rect = section.getBoundingClientRect();
         const sectionCenter = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;

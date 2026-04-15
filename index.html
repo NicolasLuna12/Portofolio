@@ -44,12 +44,12 @@
                 <span>Nicolas Luna</span>
             </div>
             <div class="nav-menu">
-                <a href="#home" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a>
-                <a href="#about" class="nav-link" data-es="Sobre mí" data-en="About">Sobre mí</a>
-                <a href="#skills" class="nav-link" data-es="Tecnologías" data-en="Stack">Tecnologías</a>
-                <a href="#certificates" class="nav-link" data-es="Certificados" data-en="Certificates">Certificados</a>
-                <a href="#projects" class="nav-link" data-es="Proyectos" data-en="Projects">Proyectos</a>
-                <a href="#contact" class="nav-link" data-es="Contacto" data-en="Contact">Contacto</a>
+                <a href="#home" class="nav-link" data-translate="nav_home">Inicio</a>
+                <a href="#about" class="nav-link" data-translate="nav_about">Sobre mí</a>
+                <a href="#skills" class="nav-link" data-translate="nav_skills">Tecnologías</a>
+                <a href="#certificates" class="nav-link" data-translate="nav_certificates">Certificados</a>
+                <a href="#projects" class="nav-link" data-translate="nav_projects">Proyectos</a>
+                <a href="#contact" class="nav-link" data-translate="nav_contact">Contacto</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
                     <span class="theme-icon theme-icon-sun" aria-hidden="true"><i class="fas fa-sun"></i></span>
                     <span class="theme-icon theme-icon-moon" aria-hidden="true"><i class="fas fa-moon"></i></span>
@@ -73,20 +73,20 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="hero-badge-dot"></span>
-                    <span data-es="Disponible para nuevos proyectos 2026" data-en="Available for new projects in 2026">Disponible para nuevos proyectos 2026</span>
+                    <span data-translate="hero_badge">Disponible para nuevos proyectos 2026</span>
                 </div>
                 <h1 class="hero-title">
-                    <span data-es="Hola, soy" data-en="Hi, I'm"><span data-i18n-label>Hola, soy</span> <span class="highlight">Nicolas Luna</span></span>
+                    <span data-translate="hero_title_prefix">Hola, soy</span> <span class="highlight">Nicolas Luna</span>
                 </h1>
-                <h2 class="hero-subtitle" data-es="Técnico Superior en Desarrollo Web y Aplicaciones Digitales" data-en="Senior Web & Digital App Developer">Técnico Superior en Desarrollo Web y Aplicaciones Digitales</h2>
-                <p class="hero-description" data-es="Desarrollador Full Stack especializado en Python/Django, .NET y desarrollo móvil Android. Experiencia en sistemas legacy COBOL, arquitecturas web escalables, APIs RESTful y bases de datos relacionales. Enfocado en soluciones robustas y código limpio." data-en="Full Stack Developer specialized in Python/Django, .NET and Android mobile development. Experience in legacy COBOL systems, scalable web architectures, RESTful APIs and relational databases. Focused on robust solutions and clean code.">
+                <h2 class="hero-subtitle" data-translate="hero_subtitle">Técnico Superior en Desarrollo Web y Aplicaciones Digitales</h2>
+                <p class="hero-description" data-translate="hero_description">
                     Desarrollador Full Stack especializado en Python/Django, .NET y desarrollo móvil Android. 
                     Experiencia en sistemas legacy COBOL, arquitecturas web escalables, APIs RESTful y bases de datos relacionales. 
                     Enfocado en soluciones robustas y código limpio.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary" data-es="Ver Proyectos" data-en="View Projects"><i class="fas fa-folder-open"></i> <span data-i18n-label>Ver Proyectos</span></a>
-                    <a href="#contact" class="btn btn-outline" data-es="Contactarme" data-en="Contact Me"><i class="fas fa-envelope"></i> <span data-i18n-label>Contactarme</span></a>
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-folder-open"></i> <span data-translate="hero_btn_projects">Ver Proyectos</span></a>
+                    <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> <span data-translate="hero_btn_contact">Contactarme</span></a>
                     <button id="demo-btn" class="btn btn-secondary" type="button"><i class="fas fa-laptop"></i> Ver demo web</button>
                     <button id="demo-android-btn" class="btn btn-android" type="button"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png" alt="Android" class="android-icon"> Ver demo Android</button>
                 </div>
@@ -275,7 +275,7 @@ class SystemHealthView(APIView):
                         <i class="fas fa-server"></i>
                         Backend
                     </h3>
-                    <p class="category-meta" data-es="Arquitectura de negocio, APIs y lógica de dominio" data-en="Business architecture, APIs and domain logic">Arquitectura de negocio, APIs y lógica de dominio</p>
+                    <p class="category-meta" data-translate="skills_meta_backend">Arquitectura de negocio, APIs y lógica de dominio</p>
                     <div class="skills-list">
                         <div class="skill-item">Python</div>
                         <div class="skill-item">Django</div>
@@ -292,7 +292,7 @@ class SystemHealthView(APIView):
                         <i class="fas fa-database"></i>
                         Bases de Datos
                     </h3>
-                    <p class="category-meta" data-es="Modelado relacional, performance y persistencia" data-en="Relational modeling, performance and persistence">Modelado relacional, performance y persistencia</p>
+                    <p class="category-meta" data-translate="skills_meta_database">Modelado relacional, performance y persistencia</p>
                     <div class="skills-list">
                         <div class="skill-item">SQL Server</div>
                         <div class="skill-item">PostgreSQL</div>
@@ -307,7 +307,7 @@ class SystemHealthView(APIView):
                         <i class="fas fa-cloud"></i>
                         DevOps & Cloud
                     </h3>
-                    <p class="category-meta" data-es="Versionado, contenedores y despliegues" data-en="Versioning, containers and deployments">Versionado, contenedores y despliegues</p>
+                    <p class="category-meta" data-translate="skills_meta_devops">Versionado, contenedores y despliegues</p>
                     <div class="skills-list">
                         <div class="skill-item">Git</div>
                         <div class="skill-item">GitHub</div>
@@ -322,7 +322,7 @@ class SystemHealthView(APIView):
                         <i class="fas fa-code"></i>
                         Desarrollo Web
                     </h3>
-                    <p class="category-meta" data-es="Interfaces modernas y experiencia de usuario" data-en="Modern interfaces and user experience">Interfaces modernas y experiencia de usuario</p>
+                    <p class="category-meta" data-translate="skills_meta_web">Interfaces modernas y experiencia de usuario</p>
                     <div class="skills-list">
                         <div class="skill-item">HTML/CSS</div>
                         <div class="skill-item">JavaScript</div>
@@ -337,7 +337,7 @@ class SystemHealthView(APIView):
                         <i class="fas fa-mobile-alt"></i>
                         Desarrollo Móvil
                     </h3>
-                    <p class="category-meta" data-es="Apps nativas y consumo de servicios backend" data-en="Native apps and backend service integration">Apps nativas y consumo de servicios backend</p>
+                    <p class="category-meta" data-translate="skills_meta_mobile">Apps nativas y consumo de servicios backend</p>
                     <div class="skills-list">
                         <div class="skill-item">Android (Java)</div>
                         <div class="skill-item">Kotlin</div>
@@ -675,153 +675,27 @@ class SystemHealthView(APIView):
     </footer>
 
     <!-- Modal Demo Login -->
-    <div id="demo-modal" class="modal" style="display:none;">
+    <div id="demo-modal" class="modal" aria-hidden="true">
         <div class="modal-content demo-modal-content">
             <span class="close-modal" id="close-demo-modal">&times;</span>
             <div class="modal-icon">
                 <i class="fas fa-user-shield"></i>
             </div>
             <h3>Credenciales de Demo</h3>
-            <p style="font-size:0.98rem; color:var(--text-secondary,#a0a0a0); margin-bottom:1.1rem;">
-                <strong style="color: #ffd700;">Nota:</strong> Este acceso es solo para fines de demostración. El entorno y los datos pueden ser restablecidos o modificados en cualquier momento.<br>
-                <strong style="color: #ffd700;">Advertencia:</strong> Los servidores de la demo <u>no están disponibles 24/7</u>. Si están apagados, pueden demorar hasta <b>1:30 minutos</b> en volver a estar online tras el primer acceso.
+            <p class="demo-modal-note">
+                <strong class="demo-modal-note-highlight">Nota:</strong> Este acceso es solo para fines de demostración. El entorno y los datos pueden ser restablecidos o modificados en cualquier momento.<br>
+                <strong class="demo-modal-note-highlight">Advertencia:</strong> Los servidores de la demo <u>no están disponibles 24/7</u>. Si están apagados, pueden demorar hasta <b>1:30 minutos</b> en volver a estar online tras el primer acceso.
             </p>
             <div class="modal-credentials">
                 <div><span class="modal-label">Usuario:</span> <span class="modal-value">demo@demo.com</span></div>
                 <div><span class="modal-label">Contraseña:</span> <span class="modal-value">demo1234</span></div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; align-items: center;">
+            <div class="demo-modal-actions">
                 <button id="go-demo-login" class="btn btn-success demo-btn-modal"><i class="fas fa-sign-in-alt"></i> Ir al Login</button>
-                <a href="https://presentacionispcfood.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary demo-btn-modal" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-presentation"></i> Presentación del producto</a>
+                <a href="https://presentacionispcfood.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary demo-btn-modal demo-modal-presentation"><i class="fas fa-presentation"></i> Presentación del producto</a>
             </div>
         </div>
     </div>
-    <style>
-    .modal {
-        position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
-    }
-    .modal-content.demo-modal-content {
-        background: var(--bg-secondary, #1a1a1a);
-        padding: 2rem 2.5rem 1.8rem 2.5rem;
-        border-radius: 16px;
-        box-shadow: var(--shadow, 0 6px 32px #0003);
-        text-align: center;
-        font-family: 'Inter', Arial, sans-serif;
-        max-width: 600px;
-        width: 90%;
-        position: relative;
-        color: var(--text-primary, #fff);
-        border: 2.5px solid var(--primary-color, #0070f3);
-        animation: popIn .25s cubic-bezier(.4,2,.6,1) 1;
-    }
-    @keyframes popIn {
-        0% { transform: scale(.8); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-    .modal-icon {
-    font-size: 2.7rem;
-    color: var(--primary-color, #0070f3);
-    margin-bottom: 0.7rem;
-    margin-top: -0.5rem;
-    }
-    .modal-content.demo-modal-content h3 {
-    font-weight: 700;
-    font-size: 1.45rem;
-    margin-bottom: 1.2rem;
-    color: var(--primary-color, #0070f3);
-    letter-spacing: 0.01em;
-    }
-    .modal-credentials {
-        margin-bottom: 1.5rem;
-    }
-    .modal-label {
-    font-weight: 600;
-    color: var(--primary-color, #0070f3);
-    margin-right: 0.5em;
-    }
-    .modal-value {
-    font-family: 'Fira Mono', 'Consolas', monospace;
-    background: var(--bg-tertiary, #2a2a2a);
-    padding: 0.15em 0.5em;
-    border-radius: 5px;
-    font-size: 1.08em;
-    color: var(--text-primary, #fff);
-    }
-    .demo-btn-modal {
-    margin-top: 0 !important;
-    font-size: 0.95rem !important;
-    padding: 0.75em 1.3em !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: all 0.2s;
-    border: none !important;
-    cursor: pointer;
-    max-width: 320px;
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    }
-    .demo-btn-modal i {
-        margin-right: 0.5em;
-    }
-    .demo-btn-modal.btn-success {
-        background: linear-gradient(135deg, #34a853, #a8e063) !important;
-        color: white !important;
-    }
-    .demo-btn-modal.btn-success:hover {
-        background: linear-gradient(135deg, #218838, #6fdc6f) !important;
-        transform: translateY(-2px);
-    }
-    .demo-btn-modal.btn-secondary {
-        background: linear-gradient(135deg, #ff6b6b, #ff8e53) !important;
-        color: white !important;
-    }
-    .demo-btn-modal.btn-secondary:hover {
-        background: linear-gradient(135deg, #ff5252, #ff7043) !important;
-        transform: translateY(-2px);
-    }
-    .close-modal {
-    position: absolute; right: 1.5rem; top: 1.2rem; font-size: 2rem; cursor: pointer; color: var(--primary-color, #0070f3); transition: color 0.2s;
-    }
-    .close-modal:hover {
-    color: var(--accent-color, #00d9ff);
-    }
-    </style>
-
-    <script>
-    // Modal Demo
-    document.addEventListener('DOMContentLoaded', function() {
-        var demoBtn = document.getElementById('demo-btn');
-        var demoAndroidBtn = document.getElementById('demo-android-btn');
-        var modal = document.getElementById('demo-modal');
-        var closeModal = document.getElementById('close-demo-modal');
-        var goDemo = document.getElementById('go-demo-login');
-        window.lastDemo = null;
-        if(demoBtn && modal && closeModal && goDemo) {
-            demoBtn.onclick = function() { modal.style.display = 'flex'; window.lastDemo = 'web'; };
-            closeModal.onclick = function() { modal.style.display = 'none'; };
-            goDemo.onclick = function() {
-                if(window.lastDemo === 'android') {
-                    window.open('https://appetize.io/app/b_zzjugodwwxe26uawgbpk4yiqhi', '_blank');
-                } else {
-                    window.open('https://ispcfood.dev.ar/', '_blank');
-                }
-                modal.style.display = 'none';
-            };
-            window.onclick = function(event) {
-                if(event.target === modal) modal.style.display = 'none';
-            };
-        }
-        if(demoAndroidBtn && modal && closeModal && goDemo) {
-            demoAndroidBtn.onclick = function() { modal.style.display = 'flex'; window.lastDemo = 'android'; };
-        }
-    });
-    </script>
-
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/translator.js"></script>
@@ -830,6 +704,7 @@ class SystemHealthView(APIView):
     <script src="js/animations.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/projects.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/main.js"></script>
     <script src="script.js"></script>
 </body>
